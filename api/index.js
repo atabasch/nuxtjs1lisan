@@ -1,0 +1,26 @@
+const Express = require("express");
+const session = require('express-session');
+const dotenv = require("dotenv");
+dotenv.config();
+const app = Express();
+
+// IMPORT ROUTERS
+let routersWord = require("./routers-words");
+let routersMain = require("./routers-main");
+
+let hour4ses = 3600000
+app.use(session({
+  secret: '45WNUX7J51L!54N',
+  resave: true,
+  saveUninitialized: true,
+  cookie: { maxAge: hour4ses/2 }
+}));
+
+
+app.use('/', routersMain);
+app.use('/words', routersWord);
+
+module.exports = {
+  path: "/api",
+  handler: app
+}

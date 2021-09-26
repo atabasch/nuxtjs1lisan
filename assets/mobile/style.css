@@ -1,0 +1,33 @@
+html, body, #app{height: 100vh;}
+.row{margin-left: 0 !important; margin-right: 0 !important;}
+*{border-radius: 0px !important;}
+*:focus, *:active{
+    outline: none !important;
+    box-shadow: none !important;
+}
+#cllickTimesBar .dropdown-menu{min-width: auto; width:80px;}
+#cllickTimesBar .dropdown-menu span{ cursor: pointer; border-bottom: 1px dashed rgba(0,0,0,0.2)}
+#cllickTimesBar .dropdown-menu span:hover{ font-weight: 600; font-size: 1.2rem}
+.disabled{ position: relative; opacity: 0.61}
+.disabled::after{ content:''; display: block; width:100%; position:absolute; top: 0; bottom: 0; left: 0; right: 0; background-color: rgba(0,0,0,0.1)}
+
+.bg-blue{ background-color: #0E4C75; }
+.text-blue{ color: #0E4C75 }
+.bg-lightblue{ background-color: #3282B7 !important; }
+
+
+#bottomNav .nav-item a:active{
+    background-color: rgba(0,0,0,0.10);
+    -mox-box-shadow: inset 0 0 20px rgba(0,0,0,0.60);
+    -webkit-box-shadow: inset 0 0 20px rgba(0,0,0,0.60);
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.60);
+    outline: none;
+}
+
+#workFixButton{
+    position:fixed; right:10px; bottom:70px; width:50px; height:50px; line-height:50px; font-size:1.4rem;
+}
+
+
+#blogPost h2{ font-size:1.25rem; }
+#blogPost article{ font-size: 95%;}

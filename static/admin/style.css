@@ -1,0 +1,104 @@
+/*
+font-family: 'Roboto', sans-serif;
+font-family: 'Titillium Web', sans-serif;
+*/
+html, body, #outerWrap, #outerWrap > div{
+    min-height: 100%;
+    height: 100%;
+}
+body {
+  font: 14px 'Roboto', sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+*:hover, *:focus, *.active{
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+#sidebarMenu h6{
+    font-family: 'Titillium Web', sans-serif;
+    font-weight: 600;
+    color: #999 !important;
+    padding: 0px 5px !important;
+}
+#sidebarMenu a {
+    font-weight: 600;
+    font-family: 'Titillium Web', sans-serif;
+    padding: 5px 5px 5px 10px;
+    color: #555;
+    /*font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";*/
+}
+#sidebarMenu a:hover{ color: #111; }
+
+
+.resultListTable ul.sub-links-list{ visibility: hidden;}
+.resultListTable tr:hover ul.sub-links-list{ visibility: visible;}
+ul.sub-links-list{ margin: 0; padding: 0; list-style-type: none;}
+ul.sub-links-list li{float: left; margin: 0px 8px 0px 0px}
+ul.sub-links-list li a{font-size: 12px; text-decoration: none;}
+
+.categoriesCheckedList{border:1px solid #e0e0e0; margin: 0; padding: 0;}
+.categoriesCheckedList ul{margin: 0; padding: 5px; list-style-type: none; max-height: 314px; overflow: auto;}
+.categoriesCheckedList ul li{padding: 0; margin: 0;}
+.categoriesCheckedList ul li label{display: block; margin: 0; border-bottom: 1px solid #f0f0f0; height:28px; line-height: 28px; font-weight: 500;}
+
+.heightLimit300{ max-height: 300px; overflow: auto; }
+.heightLimit150{ max-height: 150px; overflow: auto; }
+ul.clearList{margin: 0; padding: 0; list-style-type: none;}
+ul.clearList li{height:25px; line-height: 25px; overflow: hidden; border-bottom: 1px dashed #e0e0e0; }
+
+.mediaPopupItem{padding:2.5px;}
+.mediaPopupItem a{display: block; background-size: contain; background-position: center; background-repeat: no-repeat; background-color: white; border: 2px solid #c0c0c0;}
+.mediaPopupItem a.active{border-color: blue;}
+
+.scaleto{
+    position: relative;
+    padding: 0;
+    height: 0;
+    overflow: hi
+}
+.scale-1x1{ padding-bottom: 100%; }
+.scale-2x1{ padding-bottom: 50%; }
+.scale-1x2{ padding-bottom: 200%; }
+.scale-4x3{ padding-bottom: 75%; }
+.scale-3x4{ padding-bottom: 133%; }
+.scale-16x9{ padding-bottom: 56.25%; }
+
+#headTitleSection h4{font-family: 'Titillium Web', sans-serif; font-weight: 700}
+
+#headerNavbarMenu a.nav-link{ font-family: 'Titillium Web', sans-serif; font-weight: 600}
+#headerNavbarMenu a.nav-link span{ font-size: 1rem; margin-right: 3px; }
+
+
+.asw-table td{padding: 7px;}
+.datatables td{
+    padding: 0;
+}
+
+
+
+
+fieldset.aswflin{ border: 1px solid #c0c0c0; overflow: hidden; border-radius: 3px}
+fieldset.aswflin legend{font-size: 0.9rem; display: inline-block; width: auto; max-width: auto; margin: 0px 0px 0px 5px; padding: 3px; font-style: italic; color: #999;}
+fieldset.aswflin input[type='text'],
+fieldset.aswflin input[type='password'],
+fieldset.aswflin select, fieldset.aswflin option,
+fieldset.aswflin textarea{width: 100%; margin-top: -3px; padding:5px 5px 5px 8px; border:0 !important; }
+
+
+
+.btn-small{
+    height:18px; padding: 0px 5px; line-height:16px; font-size: 14px;
+}
+
+
+.miniSelectList{ height: 180px; overflow: hidden; overflow-y: auto;}
+.miniSelectList > div{ display: inline-block; padding: 0; margin:2px 1px; }
+.miniSelectList > div label{font-size:15px; padding:3px; margin: 0; line-height: 13px;
+border:1px solid #d0d0d0; background-color: #f9f9f9; cursor: pointer;}
+.miniSelectList > div label input{ float:left; margin-right: 2px;}
+.miniSelectList > div label span{}

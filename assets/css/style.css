@@ -1,0 +1,23 @@
+/*
+  Style .css
+*/
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.row{margin-left: 0 !important; margin-right: 0 !important;}
+
+.resultListTable ul.sub-links-list{ visibility: hidden;}
+.resultListTable tr:hover ul.sub-links-list{ visibility: visible;}
+ul.sub-links-list{ margin: 0; padding: 0; list-style-type: none;}
+ul.sub-links-list li{float: left; margin: 0px 8px 0px 0px}
+ul.sub-links-list li a{font-size: 12px; text-decoration: none;}
+
+.categoriesCheckedList{border:1px solid #e0e0e0; margin: 0; padding: 0;}
+.categoriesCheckedList ul{margin: 0; padding: 5px; list-style-type: none; max-height: 314px; overflow: auto;}
+.categoriesCheckedList ul li{padding: 0; margin: 0;}
+.categoriesCheckedList ul li label{display: block; margin: 0; border-bottom: 1px solid #f0f0f0; height:28px; line-height: 28px; font-weight: 500;}
