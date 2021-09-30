@@ -1,7 +1,7 @@
 <template>
 <section class="my-5 py-2 row">
 
-  <WordTaxGridItem v-for="(item, index) in items"
+  <WordTaxGridItem v-for="(item, index) in getItems"
                    :item="item"
                    :key="index"
                    :class-value="'col-6 col-sm-4 col-lg-3 p-2'"
@@ -12,6 +12,8 @@
 
 <script>
 import WordTaxGridItem from "../../../components/mobile/WordTaxGridItem";
+import { mapGetters } from 'vuex'
+
 export default {
   name: "categories",
   layout: "mobile",
@@ -21,21 +23,16 @@ export default {
   },
 
   asyncData(context){
-    let startNumber = context.params.number
     context.store.commit("setHeaderBar", {title: 'Kategoriler', prevUrl:'/mobile' })
-    return context.$axios.get(`/words/categories`)
-      .then(response => {
-        return {
-          ...response.data,
-          startNumber,
-          workUrl: '/mobile/words/'+startNumber+'/work'
-        };
-      });
+    return context.store.dispatch("branches/fillItems", {url: '/words/categories'})
   }, //asyncData
 
-  created(){
+  computed: {
+    ...mapGetters({
+      getItems: "branches/getItems"
+    })
+  }
 
-  }//created
 }
 </script>
 

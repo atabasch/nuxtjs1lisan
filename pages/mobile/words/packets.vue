@@ -1,7 +1,7 @@
 <template>
   <section class="my-5 py-2 row">
 
-    <WordTaxGridItem v-for="(item, index) in items"
+    <WordTaxGridItem v-for="(item, index) in this.$store.getters['branches/getItems']"
                      :item="item"
                      :key="index"
                      :class-value="'col-6 col-sm-4 col-lg-3 p-2'"
@@ -19,22 +19,16 @@ export default {
   components: {
     WordTaxGridItem
   },
-
   asyncData(context){
-    let id = context.params.number
     context.store.commit("setHeaderBar", {title: 'Kelime Paketleri', prevUrl:'/mobile' })
-    return context.$axios.get(`/words/packets`)
-      .then(response => {
-        return {
-          ...response.data,
-          packetId:id,
-        };
-      });
+    return context.store.dispatch("branches/fillItems", {url: '/words/packets'})
   }, //asyncData
+
 
   created(){
 
-  }//created
+  }, //created
+
 }
 </script>
 

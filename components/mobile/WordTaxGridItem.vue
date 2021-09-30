@@ -1,12 +1,17 @@
 <template>
   <section :class="classValue">
-      <div class="border shadow bg-white p-2 item-in">
-        <div class="media-body p-1 pt-2">
+      <div class="card shadow bg-white item-in">
+        <div class="card-body p-2 pt-2 position-relative">
           <span class="wordCount">{{ item.word_count }} kelime</span>
           <h3 class="m-0">{{ item.tax_name }}</h3><hr>
           <p>{{ JSON.parse(item.tax_datas).description }}</p>
+          <NuxtLink :to="url" class="stretched-link"></NuxtLink>
         </div>
-        <a :href="url" class="stretched-link"></a>
+
+        <div class="card-footer row p-0">
+          <div class="col p-0"><NuxtLink :to="`${url}?work=true`" class="btn btn-primary btn-block"><i class="fas fa-question"></i> Tahmin</NuxtLink></div>
+          <div class="col p-0"><NuxtLink :to="`${url.replace('words', 'exercise')}-test`" class="btn btn-success btn-block"><i class="fas fa-check"></i> Test</NuxtLink></div>
+        </div>
       </div>
   </section>
 </template>
@@ -25,7 +30,7 @@ export default {
 <style scoped>
 .item-in{
   position: relative;
-  height:150px;
+
   text-align: center;
 }
 .wordCount{
@@ -45,6 +50,7 @@ h3{
 p{
   font-size: 0.8rem;
   line-height: 1rem;
+  height:  2rem;
   margin: 0;
   padding: 0;
 }

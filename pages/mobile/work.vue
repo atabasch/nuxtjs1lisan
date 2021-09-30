@@ -1,19 +1,19 @@
 <template>
-<section class="mt-5 pt-2">
+  <section class="mt-5 pt-2">
 
-  <div id="listTable" v-if="!isWork">
-    <WordsTable :words="words"/>
-    <div class="text-right">
-      <button class="btn bg-success text-white" type="button" @click="isWork=true">Kelimeleri Çalış</button>
+    <div id="listTable" v-if="!isWork">
+      <WordsTable :words="words"/>
+      <div class="text-right">
+        <button class="btn bg-success text-white" type="button" @click="isWork=true">Kelimeleri Çalış</button>
+      </div>
     </div>
-  </div>
 
-  <section id="workTable" class="position-relative w-100" style="height: 600px" v-else>
-    <CardStatusProgressBar :percent="percent"/>
-    <WordWorkCard v-if="showedIndex==index" v-for="(word, index) in words" :word="word" :key="index" :nextCard="nextCard"/>
+    <section id="workTable" class="position-relative w-100" style="height: 600px" v-else>
+      <CardStatusProgressBar :percent="percent"/>
+      <WordWorkCard v-if="showedIndex==index" v-for="(word, index) in words" :word="word" :key="index" :nextCard="nextCard"/>
+    </section>
+
   </section>
-
-</section>
 </template>
 
 <script>
@@ -21,9 +21,10 @@ import WordsTable from "~/components/mobile/WordsTable";
 import CardStatusProgressBar from "~/components/mobile/CardStatusProgressBar";
 import WordWorkCard from "~/components/mobile/WordWorkCard";
 import {upgradeWordsForList} from "~/plugins/helpers";
+
 export default {
-  name: "list",
-  layout: 'mobile',
+  name: "work",
+  layout: "mobile",
 
   components:{
     WordsTable,
@@ -43,21 +44,17 @@ export default {
   },
 
   asyncData(context){
-    let params = context.params.number.split(",")
-
-    context.store.commit("setHeaderBar", {title:"Kelime Listesi", prevUrl: '/mobile/words'});
-    return context.$axios.get(`/words/${params[0]}/${params[1]}`)
+    return context.$axios.get(`/work`)
       .then(response => {
         return {
           ...response.data,
-          offset:params[0],
           limit: response.data.words.length,
         };
       });
   }, //asyncData
 
   async created(){
-    this.isWork = this.$route.query.work || false;
+    this.$store.commit("setHeaderBar", {title:"Kelime Çalışması", prevUrl: '/mobile'});
     this.words = await upgradeWordsForList(this.words);
   }, //created
   mounted(){

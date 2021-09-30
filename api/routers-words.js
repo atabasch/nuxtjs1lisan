@@ -4,8 +4,8 @@ const express = require("express");
 const router = express.Router();
 import db from "../db";
 
-function getSelectedByDirectory(request){
-  return ((request.session.langdir=='tr-de')? 'asw_words.word_translation AS original, asw_words.word_original AS translation' : 'asw_words.word_original AS original, asw_words.word_translation AS translation');
+function getSelectedByDirectory(request, preTable='asw_words'){
+  return ((request.session.langdir=='tr-de')? `${preTable}.word_translation AS original, ${preTable}.word_original AS translation` : `${preTable}.word_original AS original, ${preTable}.word_translation AS translation`);
 } // getSelectedByDirectory
 
 let sqlWordsAll = `SELECT asw_words.*, asw_taxonomies.tax_name FROM asw_words

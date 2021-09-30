@@ -6,18 +6,23 @@
   </div>
 
   <div class="bg-blue py-1 px-2 clearfix fixed-top" v-else>
-    <a :href="header.prevUrl" class="btn btn-sm text-light mr-2"><i class="fas fa-angle-left fa-2x "></i></a>
-    <h1 style="font-size: 1rem" class="d-inline text-light">{{ header.title }}</h1>
+    <NuxtLink :to="getHeaderBar.prevUrl" class="btn btn-sm text-light mr-2"><i class="fas fa-angle-left fa-2x "></i></NuxtLink>
+    <h1 style="font-size: 1rem" class="d-inline text-light">{{ getHeaderBar.title }}</h1>
   </div>
   </section>
 </template>
 
 <script>
+import {mapGetters} from "vuex";
 export default {
   name: "Header",
 
   created(){
     this.header = this.$store.getters.getHeaderBar;
+  },
+
+  computed: {
+    ...mapGetters(["getHeaderBar"])
   }
 }
 </script>

@@ -6,7 +6,7 @@
     <Header/>
     <Nuxt/>
     <Navbar/>
-    <a href="/mobile/work" id="workFixButton" class="bg-success text-center text-light rounded-circle shadow-lg border-bottom border-dark"><i class="fas fa-dumbbell"></i></a>
+    <NuxtLink to="/mobile/work" id="workFixButton" class="bg-success text-center text-light rounded-circle shadow-lg border-bottom border-dark"><i class="fas fa-dumbbell"></i></NuxtLink>
   </div>
   </div>
   </div>

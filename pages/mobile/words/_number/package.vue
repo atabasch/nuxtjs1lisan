@@ -2,15 +2,16 @@
   <section class="mt-5 pt-2">
 
     <div id="listTable" v-if="!isWork">
-      <WordsTable :words="words"/>
+      <WordsTable :words="this.$store.getters['words/getWords']"/>
       <div class="text-right">
-        <button class="btn bg-success text-white" type="button" @click="isWork=true">Kelimeleri Çalış</button>
+        <button class="btn btn-primary text-white" type="button" @click="isWork=true"><i class="fas fa-question"></i> Tahmin Et</button>
+        <NuxtLink :to='`/mobile/exercise/${packageId}/package-test`' class="btn btn-success text-white"><i class="fas fa-check"></i> Test Çöz</NuxtLink>
       </div>
     </div>
 
     <section id="workTable" class="position-relative w-100" style="height: 600px" v-else>
       <CardStatusProgressBar :percent="percent"/>
-      <WordWorkCard v-if="showedIndex==index" v-for="(word, index) in words" :word="word" :key="index" :nextCard="nextCard"/>
+      <WordWorkCard v-if="showedIndex==index" v-for="(word, index) in this.$store.getters['words/getWords']" :word="word" :key="index" :nextCard="nextCard"/>
     </section>
 
   </section>
@@ -20,6 +21,8 @@
 import WordsTable from "../../../../components/mobile/WordsTable";
 import CardStatusProgressBar from "~/components/mobile/CardStatusProgressBar";
 import WordWorkCard from "~/components/mobile/WordWorkCard";
+import {upgradeWordsForList} from "../../../../plugins/helpers";
+
 export default {
   name: "package",
   layout: 'mobile',
@@ -32,9 +35,7 @@ export default {
 
   data(){
     return {
-      words: [],
       sentences: {},
-      finished: [],
       showedIndex: 0,
       percent: 0,
       isWork:false
@@ -43,53 +44,26 @@ export default {
 
   asyncData(context){
     let packageId = context.params.number
-    return context.$axios.get(`/words/${packageId}/package`)
-      .then(response => {
-        console.log(response.data);
-        return {
-          ...response.data,
-          packageId,
-          limit: response.data.words.length,
-        };
-      });
-  }, //asyncData
+    let requestUrl = `/words/${packageId}/package`;
+    return context.store.dispatch("words/fillWords", {url:requestUrl});
+   }, //asyncData
 
-  created(){
-    this.$store.commit("setHeaderBar", {title:this.package.tax_name, prevUrl: '/mobile/words/packets'});
-    this.words.forEach(async (item, index) => {
-      let word = item;
-      let datas = JSON.parse(word.word_datas);
-      if(typeof datas.sentences != 'undefined'){
-        if(datas.sentences.length > 0){
-          let randomSnt = datas.sentences[Math.floor((Math.random()*datas.sentences.length))];
-          word.sentence = (Object.keys(randomSnt).indexOf('original')<0)? {original:'', translation:''} : randomSnt;
-        }else{
-          word.sentence = {original:'', translation:''};
-        }
-      }else{
-        word.sentence = {original:'', translation:''};
-      }
-      word.perfekt = (typeof datas.perfekt == 'undefined')? null : datas.perfekt;
-      word.conjugations = (typeof datas.conjugations == 'undefined')? null : datas.conjugations.map((item, i) => { return `<div class="col-6 py-0 px-1" style="font-size:0.90rem; line-height: 0.95rem;">${item}</div>`; }).join('');
+  created() {
+    this.$store.commit("setHeaderBar", {title:this.$store.getters["words/getPackage"].tax_name, prevUrl: '/mobile/words/packets'});
+    this.isWork = this.$route.query.work || false;
+    this.packageId = this.$route.params.number;
+  },
 
-      word.original = (word.original.indexOf('+')<0)? word.original : '<strong class="text-dark">'+word.original.replace('+', '</strong>');
-      word.translation = (word.translation.indexOf('+')<0)? word.translation : '<strong class="text-dark">'+word.translation.replace('+', '</strong>');
-      this.words[index] = word;
-
-
-    });//foreach
-
-  }, //created
   mounted(){
     this.updateProgress();
   },
 
   methods: {
     updateProgress(){
-      this.percent = Math.ceil((100/this.limit)*(this.showedIndex+1));
+      this.percent = Math.ceil((100/this.$store.getters["words/getTotalWordCount"])*(this.showedIndex+1));
     },
     nextCard(){
-      if(this.showedIndex<this.limit-1){
+      if(this.showedIndex<this.$store.getters["words/getTotalWordCount"]-1){
         this.showedIndex++;
         this.updateProgress();
       }else{

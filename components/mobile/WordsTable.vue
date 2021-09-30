@@ -24,7 +24,7 @@
 export default {
   name: "WordTable",
   props:{
-    words: Object
+    words: Array
   }
 }
 </script>
