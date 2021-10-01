@@ -68,5 +68,11 @@ export default {
   serverMiddleware: [
     bodyParser.json(),
     "~/api"
-  ]
+  ],
+
+  server: {
+    port: 5001,
+  },
+
+  telemetry: false
 }
