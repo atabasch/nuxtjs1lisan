@@ -21,7 +21,7 @@ export const mutations = {
 export const actions = {
 
   async fillItems(context, data){
-    return this.$axios.get(data.url)
+    return this.$axios.post(data.url)
       .then(response =>{
         context.commit("setItems", response.data.items);
       });

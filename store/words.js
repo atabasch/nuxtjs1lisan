@@ -34,7 +34,7 @@ export const mutations = {
 export const actions = {
 
   async fillWords(context, data){
-    return this.$axios.get(data.url)
+    return this.$axios.post(data.url)
       .then(async response => {
         context.commit("setWords", await upgradeWordsForList(response.data.words))
         if(typeof response.data.package != "undefined"){

@@ -25,7 +25,7 @@ export default {
     if(typeof params[1] == "undefined" || typeof params[2] != "undefined"){
       context.redirect("/mobile/blog");
     }else{
-      return context.$axios.get(`/blog/${params[0]}/${params[1]}`).then(response => {
+      return context.$axios.post(`/blog/${params[0]}/${params[1]}`).then(response => {
         context.store.commit("setHeaderBar", {title:response.data.post.post_title, prevUrl:"/mobile/blog"})
         return {
           ...response.data

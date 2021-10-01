@@ -12,12 +12,12 @@ let sqlWordsAll = `SELECT asw_words.*, asw_taxonomies.tax_name FROM asw_words
                     INNER JOIN asw_taxonomies ON asw_taxonomies.tax_id=asw_words.word_type
                     ORDER BY asw_words.word_id ASC`;
 
-router.get("/", (request, response)=>{
+router.post("/", (request, response)=>{
   db.query(sqlWordsAll, (err, res, fields)=>{  response.status(200).json({ words:res }); });
 });
 
 
-router.get("/count", (request, response)=>{
+router.post("/count", (request, response)=>{
   db.query("SELECT count(*) as total FROM asw_words", (err, res, fields) => {
     response.status(200).json({count:res[0].total})
   })
@@ -25,7 +25,7 @@ router.get("/count", (request, response)=>{
 
 //===PACKETS==============================================================================================
 // PAKET LİSTESİ
-router.get('/packets', (request, response)=>{
+router.post('/packets', (request, response)=>{
   let sql = `SELECT package_id as tax_id, package_name as tax_name, package_cover as tax_cover, package_datas as tax_datas, JSON_LENGTH(package_items) AS word_count FROM asw_packets WHERE package_status=1 ORDER BY package_id DESC`;
   db.query(sql, (err, res, fields) => {
     if(err){ response.status(200).json( {err} ) }
@@ -34,7 +34,7 @@ router.get('/packets', (request, response)=>{
 });
 
 // PAKETLERE GÖRE KELİMELER.
-router.get('/:package_id/package', (request, response)=>{
+router.post('/:package_id/package', (request, response)=>{
   let selected = getSelectedByDirectory(request);
 
   let sqlPackage = `SELECT package_items, package_id as tax_id, package_name as tax_name, package_cover as tax_cover, package_datas as tax_datas, JSON_LENGTH(package_items) AS word_count FROM asw_packets WHERE package_status=1 AND package_id=${request.params.package_id} LIMIT 1`;
@@ -58,7 +58,7 @@ router.get('/:package_id/package', (request, response)=>{
 
 //===CATEGORIES==============================================================================================
 // TÜM KATEGORİLER
-router.get('/categories', (request, response)=>{
+router.post('/categories', (request, response)=>{
   let sql = `SELECT *,
     (SELECT COUNT(*) FROM asw_words WHERE word_categories LIKE CONCAT('%"', tax_id, '"%')) AS word_count
     FROM asw_taxonomies WHERE tax_type='word_category' AND tax_status=1 HAVING word_count>3 ORDER BY tax_name ASC`;
@@ -68,7 +68,7 @@ router.get('/categories', (request, response)=>{
 });
 
 // KATEGORİYE GÖRE KELİMELER.
-router.get('/:category_id/category', (request, response)=>{
+router.post('/:category_id/category', (request, response)=>{
   let selected = getSelectedByDirectory(request);
   let sqlCategory = `SELECT * FROM asw_taxonomies WHERE tax_type='word_category' AND tax_status=1 AND tax_id=${request.params.category_id} LIMIT 1`;
   let sqlWord = `SELECT *, ${selected} FROM asw_words WHERE word_categories LIKE \'%"${request.params.category_id}"%\' AND word_status>0 ORDER BY rand()`;
@@ -91,7 +91,7 @@ router.get('/:category_id/category', (request, response)=>{
 //===TYPES==============================================================================================
 
 // KELİME SINIFLARI
-router.get('/types', (request, response)=>{
+router.post('/types', (request, response)=>{
   let sql = `SELECT *,
     (SELECT COUNT(*) FROM asw_words WHERE word_status=1 AND word_type=tax_id) AS word_count
     FROM asw_taxonomies WHERE tax_type='word_type' AND tax_status=1 HAVING word_count>3 ORDER BY tax_name ASC`;
@@ -102,7 +102,7 @@ router.get('/types', (request, response)=>{
 
 
 // SINIFA GÖRE KELİMELER.
-router.get('/:type_id/type', (request, response)=>{
+router.post('/:type_id/type', (request, response)=>{
   let selected = getSelectedByDirectory(request);
   let sqlType = `SELECT * FROM asw_taxonomies WHERE tax_type='word_type' AND tax_status=1 AND tax_id=${request.params.type_id} LIMIT 1`;
   let sqlWord = `SELECT *, ${selected} FROM asw_words WHERE word_status=1 AND word_type=${request.params.type_id} ORDER BY rand() DESC`;
@@ -123,7 +123,7 @@ router.get('/:type_id/type', (request, response)=>{
 
 
 // KELİME GETİRME
-router.get('/:start/:limit', (request, response)=>{
+router.post('/:start/:limit', (request, response)=>{
   let start = request.params.start;
   let limit = request.params.limit;
   let selected = getSelectedByDirectory(request);

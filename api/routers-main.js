@@ -9,13 +9,13 @@ function getSelectedByDirectory(request){
   return ((request.session.langdir=='tr-de')? 'asw_words.word_translation AS original, asw_words.word_original AS translation' : 'asw_words.word_original AS original, asw_words.word_translation AS translation');
 } // getSelectedByDirectory
 
-router.get("/", (request, response) => {
+router.post("/", (request, response) => {
   response.status(200).json({
   });
 });
 
 
-router.get("/work", async (request, response)=>{
+router.post("/work", async (request, response)=>{
   let whereNotIn = '';
   if(typeof request.cookies.correctWords != 'undefined'){
     let correctWords = await JSON.parse(request.cookies.correctWords);
@@ -37,7 +37,7 @@ router.get("/work", async (request, response)=>{
 
 
 // SESSION İLE DİL DEĞİŞTİRMEK
-router.get('/change-direction', async (request, response) => {
+router.post('/change-direction', async (request, response) => {
   if(typeof request.session.langdir == "undefined"){
     request.session.langdir = 'tr-de';
   }else{

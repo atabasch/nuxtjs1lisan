@@ -18,7 +18,7 @@ export default {
 
   asyncData(context){
     context.store.commit("setHeaderBar", {title: "1 Lisan Blog", prevUrl: "/mobile"});
-    return context.$axios.get('/blog').then(response => {
+    return context.$axios.post('/blog').then(response => {
       return {
         ...response.data
       }

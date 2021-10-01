@@ -44,7 +44,7 @@ export default {
   },
 
   asyncData(context){
-    return context.$axios.get(`/work`)
+    return context.$axios.post(`/work`)
       .then(response => {
         return {
           ...response.data,

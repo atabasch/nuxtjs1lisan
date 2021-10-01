@@ -18,12 +18,12 @@ export const mutations = {
 // this.$store.dispatch('methodName', data)
 export const actions = {
   nuxtServerInit(vuexContext, context){
-    return context.$axios.get("/words").then(response => {
+    return context.$axios.post("/words").then(response => {
       //console.log(response.data);
     });
   },
   changeDirection(context){
-    this.$axios.get('/change-direction').then(response => {
+    this.$axios.post('/change-direction').then(response => {
       context.commit('setLangDir', response.data.langdir);
     });
   } //changeDirection

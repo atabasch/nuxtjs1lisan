@@ -69,7 +69,7 @@ function getTestResultForType(request, response){
 
 
 
-router.get('/test', (request, response)=>{
+router.post('/test', (request, response)=>{
   let taxonomy = request.query.taxonomy || null;
   if(taxonomy=='package'){ // EĞER TAXONOMY PACKAGE OLARAK GELDİYSE
     getTestResultForPackage(request, response);

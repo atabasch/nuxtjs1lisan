@@ -46,7 +46,7 @@ export default {
     let params = context.params.number.split(",")
 
     context.store.commit("setHeaderBar", {title:"Kelime Listesi", prevUrl: '/mobile/words'});
-    return context.$axios.get(`/words/${params[0]}/${params[1]}`)
+    return context.$axios.post(`/words/${params[0]}/${params[1]}`)
       .then(response => {
         return {
           ...response.data,
