@@ -13,7 +13,10 @@ let sqlWordsAll = `SELECT asw_words.*, asw_taxonomies.tax_name FROM asw_words
                     ORDER BY asw_words.word_id ASC`;
 
 router.get("/", (request, response)=>{
-  db.query(sqlWordsAll, (err, res, fields)=>{  return response.status(200).json({ words:res }); });
+  db.query(sqlWordsAll, (err, res, fields)=>{
+    response.writeHead(200, {"Content-Type": "application/json"});
+    response.end( JSON.stringify({ words:res }) );
+  });
 });
 
 
