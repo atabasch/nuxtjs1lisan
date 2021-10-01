@@ -12,7 +12,7 @@ let sqlWordsAll = `SELECT asw_words.*, asw_taxonomies.tax_name FROM asw_words
                     INNER JOIN asw_taxonomies ON asw_taxonomies.tax_id=asw_words.word_type
                     ORDER BY asw_words.word_id ASC`;
 
-router.post("/", (request, response)=>{
+router.get("/", (request, response)=>{
   db.query(sqlWordsAll, (err, res, fields)=>{  return response.status(200).json({ words:res }); });
 });
 
@@ -130,7 +130,7 @@ router.post('/:start/:limit', (request, response)=>{
   let sql = `SELECT asw_words.*, ${selected}, asw_taxonomies.tax_name FROM asw_words
                     INNER JOIN asw_taxonomies ON asw_taxonomies.tax_id=asw_words.word_type
                     ORDER BY asw_words.word_id ASC LIMIT ${start}, ${limit}`
-  db.query(sql, (err, res, fields)=>{return response.status(200).json({ words:res }); });
+  db.query(sql, (err, res, fields)=>{ return response.status(200).json({ words:res }); });
 });
 
 
