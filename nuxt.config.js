@@ -1,4 +1,5 @@
 const bodyParser = require("body-parser");
+const baseURL = (process.env.URL || 'http://localhost:5001')+'/api';
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -52,15 +53,15 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios',
+    ['@nuxtjs/axios', {baseURL}],
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {
-    baseURL: (process.env.URL || "127.0.0.1:5001")+'/api',
+  /*axios: {
+    baseURL: baseURL+'/api',
     //browserBaseURL: 'http://localhost:5001/api',
     //https: ( (process.env.HTTPS || false)=='true'? true : false ),
-  },
+  },*/
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
@@ -72,10 +73,10 @@ export default {
     "~/api"
   ],
 
- /* server: {
-    host: '127.0.0.1',
-    port: 5001,
-  },
+  // server: {
+  //   host: '0.0.0.0',
+  //   port: 5001,
+  // },
 
-  telemetry: false*/
+  //telemetry: false
 }
