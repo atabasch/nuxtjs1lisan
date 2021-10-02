@@ -32,7 +32,7 @@ router.post('/packets', (request, response)=>{
   let sql = `SELECT package_id as tax_id, package_name as tax_name, package_cover as tax_cover, package_datas as tax_datas, JSON_LENGTH(package_items) AS word_count FROM asw_packets WHERE package_status=1 ORDER BY package_id DESC`;
   db.query(sql, (err, res, fields) => {
     console.log("==============DB============")
-    console.log(res)
+    console.log(err)
     if(err){ return response.status(200).json( {err} ) }
     return response.status(200).json({items:res})
   });
