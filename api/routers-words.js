@@ -3,6 +3,7 @@ import {response} from "express";
 const express = require("express");
 const router = express.Router();
 import db from "../db";
+import aswDbQuery from "../plugins/aswDbQuery";
 
 function getSelectedByDirectory(request, preTable='asw_words'){
   return ((request.session.langdir=='tr-de')? `${preTable}.word_translation AS original, ${preTable}.word_original AS translation` : `${preTable}.word_original AS original, ${preTable}.word_translation AS translation`);
@@ -21,10 +22,16 @@ router.post("/", (request, response)=>{
 
 
 router.get("/count", (request, response)=>{
-  db.query("SELECT count(*) as total FROM asw_words", (err, res, fields) => {
-    console.log(res)
-    return response.status(200).json({count:res[0].total})
-  })
+  return aswDbQuery(db, "SELECT count(*) as total FROM asw_words", null)
+    .then(result => {
+      console.log("result")
+      console.log(result)
+      return response.status(200).json({count:result[0].total})
+    })
+    .catch(error => {
+      console.log(error);
+      return response.status(200).json({error:error});
+    })
 });
 
 //===PACKETS==============================================================================================
