@@ -19,7 +19,7 @@ router.post("/", (request, response)=>{
 });
 
 
-router.getn("/count", (request, response)=>{
+router.get("/count", (request, response)=>{
   db.query("SELECT count(*) as total FROM asw_words", (err, res, fields) => {
     return response.status(200).json({count:res[0].total})
   })
