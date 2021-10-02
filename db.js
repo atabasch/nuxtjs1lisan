@@ -8,5 +8,6 @@ var connection  = mysql.createConnection({
   multipleStatements: true
 });
 
+console.log(connection)
 
 module.exports = connection;
