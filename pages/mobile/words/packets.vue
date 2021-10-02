@@ -23,6 +23,10 @@ export default {
     context.store.commit("setHeaderBar", {title: 'Kelime Paketleri', prevUrl:'/mobile' })
     return context.store.dispatch("branches/fillItems", {url: '/words/packets'})
   }, //asyncData
+  fetch(context){
+    context.store.commit("setHeaderBar", {title: 'Kelime Paketleri', prevUrl:'/mobile' })
+    return context.store.dispatch("branches/fillItems", {url: '/words/packets'})
+  }, //asyncData
 
 
   created(){
