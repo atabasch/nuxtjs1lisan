@@ -4,7 +4,8 @@ const session = require('express-session');
 const dotenv = require("dotenv");
 dotenv.config();
 const app = Express();
-
+import db from "../db"
+db.connect();
 
 // IMPORT ROUTERS
 let routersBlog = require("./routers-blog");
