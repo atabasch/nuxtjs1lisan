@@ -26,7 +26,7 @@ export default {
     }},
 
   asyncData(context){
-    return context.$axios.post('/words/count')
+    return context.$axios.get('/words/count')
       .then( response => {
         let totalPage = Math.floor((response.data.count / limitWordList));
         let data = {

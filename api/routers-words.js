@@ -12,15 +12,14 @@ let sqlWordsAll = `SELECT asw_words.*, asw_taxonomies.tax_name FROM asw_words
                     INNER JOIN asw_taxonomies ON asw_taxonomies.tax_id=asw_words.word_type
                     ORDER BY asw_words.word_id ASC`;
 
-router.get("/", (request, response)=>{
+router.post("/", (request, response)=>{
   db.query(sqlWordsAll, (err, res, fields)=>{
-    response.writeHead(200, {"Content-Type": "application/json"});
-    response.end( JSON.stringify({ words:res }) );
+    return response.status(200).json({ words:res });
   });
 });
 
 
-router.post("/count", (request, response)=>{
+router.getn("/count", (request, response)=>{
   db.query("SELECT count(*) as total FROM asw_words", (err, res, fields) => {
     return response.status(200).json({count:res[0].total})
   })
