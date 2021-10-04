@@ -31,3 +31,7 @@ html, body, #app{height: 100vh;  background-color: #3282B7 !important;}
 
 #blogPost h2{ font-size:1.25rem; }
 #blogPost article{ font-size: 95%;}
+
+.workCard{
+  width: 100%; height: calc(100vh - 140px);
+}

@@ -72,11 +72,4 @@ export default {
     bodyParser.json(),
     "~/api"
   ],
-
-  // server: {
-  //   host: '0.0.0.0',
-  //   port: 5001,
-  // },
-
-  //telemetry: false
 }

@@ -9,8 +9,10 @@
         </div>
 
         <div class="card-footer row p-0">
-          <div class="col p-0"><NuxtLink :to="`${url}?work=true`" class="btn btn-primary btn-block"><i class="fas fa-question"></i> Tahmin</NuxtLink></div>
-          <div class="col p-0"><NuxtLink :to="`${url.replace('words', 'exercise')}-test`" class="btn btn-success btn-block"><i class="fas fa-check"></i> Test</NuxtLink></div>
+          <div class="col p-0 btn-group">
+            <NuxtLink class="btn btn-primary btn-block py-3 px-1 m-0" :to="`${url}?work=true`"><i class="fas fa-question"></i> Tahmin</NuxtLink>
+            <NuxtLink class="btn btn-success btn-block py-3 px-1 m-0" :to="`${url.replace('words', 'exercise')}-test`"><i class="fas fa-check"></i> Test</NuxtLink>
+          </div>
         </div>
       </div>
   </section>

@@ -1,6 +1,6 @@
 <template>
 
-    <div class="bg-white border rounded text-center p-1 pt position-absolute" style="width: calc(100% - 20px); height: 580px;" >
+    <div class="workCard bg-white border rounded text-center p-1 pt position-absolute" >
       <div class="row h-100">
         <div class="col-12">
           <h3 class="text-secondary" v-if="!showWord" v-html="word.original"></h3>

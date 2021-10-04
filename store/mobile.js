@@ -1,13 +1,13 @@
 
 export const state = ()=>({
     mobileMainItems: [
-      {label:'Paketler',      icon:'fas fa-parachute-box',    href:'/mobile/words/packets'},
-      {label:'Egzersiz',      icon:'fas fa-brain',            href:'/mobile/exercise'},
-      {label:'Sınıflar',      icon:'fas fa-shapes',           href:'/mobile/words/types'},
-      {label:'Kategoriler',   icon:'fas fa-folder-open',      href:'/mobile/words/categories'},
-      {label:'Çeviri',        icon:'fas fa-language',         href:'/mobile/translate'},
-      {label:'Makaleler',     icon:'fas fa-quote-right',      href:'/mobile/blog'},
-      {label:'Kelimeler',     icon:'fas fa-quote-right',      href:'/mobile/words'},
+      {label:'Paketler',      icon:'fas fa-parachute-box',    href:'/mobile/words/packets',       exercise:true,},
+      {label:'Egzersiz',      icon:'fas fa-brain',            href:'/mobile/exercise',            exercise:false,},
+      {label:'Sınıflar',      icon:'fas fa-shapes',           href:'/mobile/words/types',         exercise:true,},
+      {label:'Kategoriler',   icon:'fas fa-folder-open',      href:'/mobile/words/categories',    exercise:true,},
+      {label:'Çeviri',        icon:'fas fa-language',         href:'/mobile/translate',           exercise:false,},
+      {label:'Makaleler',     icon:'fas fa-quote-right',      href:'/mobile/blog',                exercise:false,},
+      {label:'Kelimeler',     icon:'fas fa-quote-right',      href:'/mobile/words/list',               exercise:true,},
       //{label:'Cümleler',     icon:'fas fa-quote-right',      href:'/mobile/sentences'},
     ],
 

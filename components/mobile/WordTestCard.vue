@@ -1,6 +1,6 @@
 <template>
 
-  <div class="bg-white border rounded text-center p-1 pt position-absolute" style="width: calc(100% - 20px); height: 580px;" >
+  <div class="bg-white border rounded text-center p-1 pt position-absolute workCard" >
     <div class="row h-100">
       <div class="col-12">
         <h3 class="text-secondary" v-html="word.original"></h3>
@@ -26,7 +26,7 @@
 
 
       <div class="col-12 align-self-end p-0">
-          <button class="btn btn-block btn-md btn-dark" :disabled="answerDisabled" @click="checkSelected" v-for="answer in answers" :value="answer">{{ answer }}</button>
+          <button class="btn btn-block btn-lg btn-dark" :disabled="answerDisabled" @click="checkSelected" v-for="answer in answers" :value="answer">{{ answer }}</button>
       </div><!-- col-12 align-self- end -->
     </div>
   </div>

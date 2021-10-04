@@ -1,12 +1,13 @@
 <template>
 <section class="w-100 h-100" id="asw">
-  <div class="container-fluid p-0">
+  <div class="container-fluid p-0 pb-5">
   <div class="row justify-content-center">
-  <div class="p-0 col-12 col-sm-12 col-lg-10 pb-5">
+  <div class="p-0 col-12 col-sm-12 col-lg-10 pb-5 mb-5">
     <Header/>
-    <Nuxt/>
+    <div class="p-1">
+      <Nuxt/>
+    </div>
     <Navbar/>
-    <NuxtLink to="/mobile/work" id="workFixButton" class="bg-success text-center text-light rounded-circle shadow-lg border-bottom border-dark"><i class="fas fa-dumbbell"></i></NuxtLink>
   </div>
   </div>
   </div>

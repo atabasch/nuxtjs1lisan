@@ -1,22 +1,28 @@
 <template>
+  <section class="mt-5 pt-2">
+    <PageWord  :words="words"/>
+  </section>
+<!--
 <section class="mt-5 pt-2">
 
   <div id="listTable" v-if="!isWork">
     <WordsTable :words="words"/>
     <div class="text-right">
-      <button class="btn bg-success text-white" type="button" @click="isWork=true">Kelimeleri Çalış</button>
+      <NuxtLink :to="this.$route.path+'?work=true'" class="btn btn-dark" type="button"><i class="fas fa-question"></i> Çeviriyi Tahmin Et</NuxtLink>
+      <NuxtLink :to="this.$route.path.replace('words', 'exercsie')+'-test'" class="btn btn-success"><i class="fas fa-check"></i> Test Çöz</NuxtLink>
     </div>
   </div>
 
-  <section id="workTable" class="position-relative w-100" style="height: 600px" v-else>
+  <section id="workTable" class="position-relative w-100" v-else>
     <CardStatusProgressBar :percent="percent"/>
     <WordWorkCard v-if="showedIndex==index" v-for="(word, index) in words" :word="word" :key="index" :nextCard="nextCard"/>
   </section>
 
-</section>
+</section> -->
 </template>
 
 <script>
+import PageWord from "../../../../components/mobile/PageWord";
 import WordsTable from "~/components/mobile/WordsTable";
 import CardStatusProgressBar from "~/components/mobile/CardStatusProgressBar";
 import WordWorkCard from "~/components/mobile/WordWorkCard";
@@ -26,6 +32,7 @@ export default {
   layout: 'mobile',
 
   components:{
+    PageWord,
     WordsTable,
     WordWorkCard,
     CardStatusProgressBar
@@ -45,7 +52,7 @@ export default {
   asyncData(context){
     let params = context.params.number.split(",")
 
-    context.store.commit("setHeaderBar", {title:"Kelime Listesi", prevUrl: '/mobile/words'});
+    context.store.commit("setHeaderBar", {title:"Kelime Listesi", prevUrl: '/mobile/words/list'});
     return context.$axios.post(`/words/${params[0]}/${params[1]}`)
       .then(response => {
         return {
@@ -57,14 +64,21 @@ export default {
   }, //asyncData
 
   async created(){
-    this.isWork = this.$route.query.work || false;
     this.words = await upgradeWordsForList(this.words);
+    this.listParams = this.$route.params.number;
   }, //created
   mounted(){
+    this.changeIsWork()
     this.updateProgress();
   },
-
+  updated() {
+    this.changeIsWork()
+  },
   methods: {
+    changeIsWork(){
+      console.log(this.$route.query.work)
+      this.isWork = this.$route.query.work=='true'? true : false;
+    },
     updateProgress(){
       this.percent = Math.ceil((100/this.limit)*(this.showedIndex+1));
     },

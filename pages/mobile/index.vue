@@ -9,7 +9,7 @@
         </section>
       </div>
     </div>
-
+    <NuxtLink to="/mobile/work" id="workFixButton" class="bg-success text-center text-light rounded-circle shadow-lg border-bottom border-dark"><i class="fas fa-dumbbell"></i></NuxtLink>
   </div>
 </template>
 
@@ -19,6 +19,10 @@ export default {
   layout: 'mobile',
   created() {
     this.$store.commit("setHeaderBar", null);
+    this.$store.commit("setHead", {title:"1 Lisan Almanca Egzersizleri", description: "1 Lisan ile Almanca egzersizleri yaparak hızlıca Almanca kelimeleri öğren."})
+  },
+  head(){
+    return this.$store.getters.getHead;
   }
 }
 </script>

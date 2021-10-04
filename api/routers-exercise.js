@@ -65,6 +65,47 @@ function getTestResultForType(request, response){
 
 
 
+function getTestResultForCategory(request, response){
+  let limit = request.query.limit || 15;
+  let id = request.query.id || null;
+
+  let sqlTaxonomy = `SELECT * FROM asw_taxonomies WHERE tax_type='word_category' AND tax_status=1 AND tax_id=${id} LIMIT 1`;
+  db.query(sqlTaxonomy, (err, res, fields)=>{
+    if(err){      return response.status(404).json( {err} );     }else{
+      let category = res;
+      let sql = getSqlForTest(request, limit, `AND mt.word_categories LIKE \'%"${id}"%\' ORDER BY rand()`, `AND word_categories LIKE \'%"${id}"%\'`);
+      db.query(sql, (err, result, fields) => {
+        if(err){      return response.status(404).json( {err} );     }else{
+
+          return response.status(200).json( {category:category[0], words:result} );
+        } //if(err)
+      });
+
+    } //if(err)
+  });
+} //getTestResultForCategory
+
+
+function getTestResultForList(request, response){
+  let limit = request.query.limit || 15;
+  let id = request.query.id || null;
+
+  let sql = getSqlForTest(request, `${id}, ${limit}`, ` ORDER BY rand()`, ``);
+  db.query(sql, (err, result, fields) => {
+    if(err){      return response.status(404).json( {err} );     }else{
+
+      return response.status(200).json( {
+        words:result,
+        taxonomy: {
+          tax_id:1,
+          tax_name: "Kelime Listesi",
+          tax_description: ""
+        }
+      } );
+    } //if(err)
+  });
+
+} //getTestResultForList
 
 
 
@@ -75,6 +116,10 @@ router.post('/test', (request, response)=>{
     getTestResultForPackage(request, response);
   }else if(taxonomy=='type'){
     getTestResultForType(request, response);
+  }else if(taxonomy=='category'){
+    getTestResultForCategory(request, response);
+  }else if(taxonomy=='list'){
+    getTestResultForList(request, response);
   }else{ // EĞER TAXONOMY BOŞ GELDİYSE
 
   }

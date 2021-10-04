@@ -1,18 +1,23 @@
 export const state = ()=>({
   headerBar: null,
-  langdir:'de-tr'
+  langdir:'de-tr',
+  head: {}
 });
 
 // this.$store.getters.methodName
 export const getters = {
   getHeaderBar(state){ return state.headerBar },
   getLangDir(state){ return state.langdir },
+  getHead(state){ return state.head; }
 }
 
 // this.$store.commit("methodName", data)
 export const mutations = {
   setHeaderBar(state, data){ state.headerBar = data; },
   setLangDir(state, data){ state.langdir = data; },
+  setHead(state, data){
+    state.head = { title: data.title, meta: [ { hid: 'description',  name: 'description',  content: data.description } ] };
+  }, // setHead
 }
 
 // this.$store.dispatch('methodName', data)

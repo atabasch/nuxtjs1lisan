@@ -19,10 +19,10 @@ export default {
   data(){
     return {
       items: [
-        {title: 'Tahmin Et', image:'/images/mobile/bg-work-test.jpg', url: '/mobile/exercise/test/list', description: 'Çeviriyi', content:'Seçilen 4 kelime arasından doğru olanı tahmin et.'},
-        {title: 'Geçmiş Zamanı Bul', image:'/images/mobile/bg-work-perfect.jpg', url: '/mobile/exercise/perfekt/list', description: 'ist, hat', content:'Fiillerin geçmiş zaman çevirilerini bul'},
-        {title: 'Yazma Sınavı', image:'/images/mobile/bg-work-fill.jpg', url: '/mobile/exercise/fill/list', description: 'Boşluk Doldur', content:'Yazarak öğren'},
-        {title: 'Artikel Tahmini', image:'/images/mobile/bg-work-artikel.jpg', url: '/mobile/exercise/artikel/list', description: 'der, die, das', content:'İsimlerin artikellerini bulmaya çalış.'},
+        {title: 'Tahmin Et', image:'/images/mobile/bg-work-test.jpg', url: '/mobile/exercise/test', description: 'Çeviriyi', content:'Seçilen 4 kelime arasından doğru olanı tahmin et.'},
+        //  {title: 'Geçmiş Zamanı Bul', image:'/images/mobile/bg-work-perfect.jpg', url: '/mobile/exercise/perfekt/list', description: 'ist, hat', content:'Fiillerin geçmiş zaman çevirilerini bul'},
+        //  {title: 'Yazma Sınavı', image:'/images/mobile/bg-work-fill.jpg', url: '/mobile/exercise/fill/list', description: 'Boşluk Doldur', content:'Yazarak öğren'},
+        //  {title: 'Artikel Tahmini', image:'/images/mobile/bg-work-artikel.jpg', url: '/mobile/exercise/artikel/list', description: 'der, die, das', content:'İsimlerin artikellerini bulmaya çalış.'},
       ]
     }
   },

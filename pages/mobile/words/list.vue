@@ -5,7 +5,7 @@
                        :item="item"
                        :key="index"
                        :class-value="'col-6 col-sm-4 col-lg-3 p-2'"
-                       :url="`/mobile/words/${item.tax_id},${limitWordList}`" />
+                       :url="`/mobile/words/${item.tax_id},${limitWordList}/list`" />
     </div>
   </section>
 </template>
@@ -14,7 +14,7 @@
 import WordTaxGridItem from "../../../components/mobile/WordTaxGridItem";
 const limitWordList = 15;
 export default {
-  name: "index",
+  name: "list",
   components: {WordTaxGridItem},
   layout:'mobile',
 

@@ -44,8 +44,11 @@ export default {
   } },
   fetch() {
     this.$store.commit("setHeaderBar", {title: "Sözlük", prevUrl: '/mobile'})
+    this.$store.commit("setHead", {title:"1 Lisan Almanca sözlük", description: "Almanca-Türkçe, Türkçe-Almanca çevirileri. Almanca sözlük."})
   },
-
+  head(){
+    return this.$store.getters.getHead;
+  },
   methods: {
     changeRoute: function(){
       let oldFrom = this.from;

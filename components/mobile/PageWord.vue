@@ -1,17 +1,17 @@
 <template>
-  <section class="mt-5 pt-2">
+  <section>
 
     <div id="listTable" v-if="!isWork">
-      <WordsTable :words="this.$store.getters['words/getWords']"/>
+      <WordsTable :words="words"/>
       <div class="text-right">
-        <Button @click="isWork=true" class="btn btn-dark" type="button"><i class="fas fa-question"></i> Çeviriyi Tahmin Et</Button>
+        <NuxtLink :to="this.$route.path+'?work=true'" class="btn btn-dark" type="button"><i class="fas fa-question"></i> Çeviriyi Tahmin Et</NuxtLink>
         <NuxtLink :to="this.$route.path.replace('words', 'exercise')+'-test'" class="btn btn-success"><i class="fas fa-check"></i> Test Çöz</NuxtLink>
       </div>
     </div>
 
-    <section id="workTable" class="position-relative w-100" style="height: 600px" v-else>
+    <section id="workTable" class="position-relative w-100" v-else>
       <CardStatusProgressBar :percent="percent"/>
-      <WordWorkCard v-if="showedIndex==index" v-for="(word, index) in this.$store.getters['words/getWords']" :word="word" :key="index" :nextCard="nextCard"/>
+      <WordWorkCard v-if="showedIndex==index" v-for="(word, index) in words" :word="word" :key="index" :nextCard="nextCard"/>
     </section>
 
   </section>
@@ -23,8 +23,10 @@ import CardStatusProgressBar from "~/components/mobile/CardStatusProgressBar";
 import WordWorkCard from "~/components/mobile/WordWorkCard";
 import {upgradeWordsForList} from "~/plugins/helpers";
 export default {
-  name: "category",
-  layout: 'mobile',
+  name: "PageWord",
+  props: {
+    words: Object
+  },
 
   components:{
     WordsTable,
@@ -43,27 +45,31 @@ export default {
     }
   },
 
-  asyncData(context){
-    let categoryId = context.params.number
-    let requestUrl = `/words/${categoryId}/category`;
-    return context.store.dispatch("words/fillWords", {url:requestUrl});
-  }, //asyncData
 
   async created(){
-    this.isWork = this.$route.query.work || false;
-    this.$store.commit("setHeaderBar", {title:this.$store.getters["words/getCategory"].tax_name, prevUrl: '/mobile/words/categories'});;
-    this.categoryId = this.$route.params.number;
+    this.words = await upgradeWordsForList(this.words);
+    this.listParams = this.$route.params.number;
   }, //created
   mounted(){
+    this.changeIsWork()
     this.updateProgress();
   },
-
+  updated() {
+    this.changeIsWork()
+  },
   methods: {
+    changeIsWork(){
+      if(this.$route.query.work=='true'){
+        this.isWork = true;
+      }else{
+        this.isWork = false;
+      }
+    },
     updateProgress(){
-      this.percent = Math.ceil((100/this.$store.getters["words/getTotalWordCount"])*(this.showedIndex+1));
+      this.percent = Math.ceil((100/this.limit)*(this.showedIndex+1));
     },
     nextCard(){
-      if(this.showedIndex<this.$store.getters["words/getTotalWordCount"]-1){
+      if(this.showedIndex<this.limit-1){
         this.showedIndex++;
         this.updateProgress();
       }else{

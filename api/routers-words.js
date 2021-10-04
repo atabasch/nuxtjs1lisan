@@ -51,7 +51,7 @@ router.post('/:package_id/package', (request, response)=>{
     if(err){      return response.status(404).json( {err} );     }else{
       let itemIds = JSON.parse(resultPackage[0].package_items).join(',');
 
-      let sqlWord = `SELECT *, ${selected} FROM asw_words WHERE word_status=1 AND word_id IN (${itemIds}) ORDER BY rand() DESC LIMIT 20`;
+      let sqlWord = `SELECT *, ${selected} FROM asw_words WHERE word_status=1 AND word_id IN (${itemIds}) ORDER BY rand() DESC LIMIT 15`;
 
       db.query(sqlWord, (err, result, fields) => {
         if(err){      return response.status(404).json( {err} );     }else{
@@ -80,7 +80,7 @@ router.post('/categories', (request, response)=>{
 router.post('/:category_id/category', (request, response)=>{
   let selected = getSelectedByDirectory(request);
   let sqlCategory = `SELECT * FROM asw_taxonomies WHERE tax_type='word_category' AND tax_status=1 AND tax_id=${request.params.category_id} LIMIT 1`;
-  let sqlWord = `SELECT *, ${selected} FROM asw_words WHERE word_categories LIKE \'%"${request.params.category_id}"%\' AND word_status>0 ORDER BY rand()`;
+  let sqlWord = `SELECT *, ${selected} FROM asw_words WHERE word_categories LIKE \'%"${request.params.category_id}"%\' AND word_status>0 ORDER BY rand() LIMIT 15`;
 
   db.query(sqlCategory, (err, res, fields)=>{
     if(err){      return response.status(404).json( {err} );     }else{
@@ -114,7 +114,7 @@ router.post('/types', (request, response)=>{
 router.post('/:type_id/type', (request, response)=>{
   let selected = getSelectedByDirectory(request);
   let sqlType = `SELECT * FROM asw_taxonomies WHERE tax_type='word_type' AND tax_status=1 AND tax_id=${request.params.type_id} LIMIT 1`;
-  let sqlWord = `SELECT *, ${selected} FROM asw_words WHERE word_status=1 AND word_type=${request.params.type_id} ORDER BY rand() DESC`;
+  let sqlWord = `SELECT *, ${selected} FROM asw_words WHERE word_status=1 AND word_type=${request.params.type_id} ORDER BY rand() DESC LIMIT 15`;
 
   db.query(sqlType, (err, res, fields)=>{
     if(err){      return response.status(404).json( {err} );     }else{

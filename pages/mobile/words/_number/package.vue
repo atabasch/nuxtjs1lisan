@@ -1,23 +1,29 @@
 <template>
-  <section class="mt-5 pt-2">
+  <!--<section class="mt-5 pt-2">
+   <PageWord  :words="this.$store.getters['words/getWords']"/>
+ </section>
+ -->
+ <section class="mt-5 pt-2">
 
-    <div id="listTable" v-if="!isWork">
-      <WordsTable :words="this.$store.getters['words/getWords']"/>
-      <div class="text-right">
-        <button class="btn btn-primary text-white" type="button" @click="isWork=true"><i class="fas fa-question"></i> Tahmin Et</button>
-        <NuxtLink :to='`/mobile/exercise/${packageId}/package-test`' class="btn btn-success text-white"><i class="fas fa-check"></i> Test Çöz</NuxtLink>
-      </div>
-    </div>
+   <div id="listTable" v-if="!isWork">
+     <WordsTable :words="this.$store.getters['words/getWords']"/>
+     <div class="text-right">
+       <Button @click="isWork=true" class="btn btn-dark" type="button"><i class="fas fa-question"></i> Çeviriyi Tahmin Et</Button>
+       <NuxtLink :to="this.$route.path.replace('words', 'exercise')+'-test'" class="btn btn-success"><i class="fas fa-check"></i> Test Çöz</NuxtLink>
+     </div>
+   </div>
 
-    <section id="workTable" class="position-relative w-100" style="height: 600px" v-else>
-      <CardStatusProgressBar :percent="percent"/>
-      <WordWorkCard v-if="showedIndex==index" v-for="(word, index) in this.$store.getters['words/getWords']" :word="word" :key="index" :nextCard="nextCard"/>
-    </section>
+   <section id="workTable" class="position-relative w-100" style="height: 600px" v-else>
+     <CardStatusProgressBar :percent="percent"/>
+     <WordWorkCard v-if="showedIndex==index" v-for="(word, index) in this.$store.getters['words/getWords']" :word="word" :key="index" :nextCard="nextCard"/>
+   </section>
 
-  </section>
+ </section>
+
 </template>
 
 <script>
+import PageWord from "../../../../components/mobile/PageWord";
 import WordsTable from "../../../../components/mobile/WordsTable";
 import CardStatusProgressBar from "~/components/mobile/CardStatusProgressBar";
 import WordWorkCard from "~/components/mobile/WordWorkCard";
@@ -28,6 +34,7 @@ export default {
   layout: 'mobile',
 
   components:{
+    PageWord,
     WordsTable,
     WordWorkCard,
     CardStatusProgressBar
