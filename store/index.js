@@ -24,7 +24,6 @@ export const mutations = {
 export const actions = {
   nuxtServerInit(vuexContext, context){
     return context.$axios.post("/words").then(response => {
-      //console.log(response.data);
     });
   },
   changeDirection(context){

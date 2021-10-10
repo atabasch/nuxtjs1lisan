@@ -19,7 +19,12 @@ import Header from "~/components/mobile/Header"
 import Navbar from "~/components/mobile/Navbar"
 export default {
   name: "mobile",
-  components: { Header, Navbar }
+  components: { Header, Navbar },
+  head(){return {
+    link: [
+      { rel: 'stylesheet', href: "/mobile/style.css" },
+    ]
+  }}
 }
 </script>
 

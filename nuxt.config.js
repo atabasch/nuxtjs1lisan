@@ -17,7 +17,6 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { rel: 'stylesheet', href: "/css/bootstrap.min.css" },
       { rel: 'stylesheet', href: "/fontawesome/css/all.min.css" },
-      { rel: 'stylesheet', href: "/mobile/style.css" },
     ],
     script: [
       {src:"/js/jquery-3.5.1.min.js", mode:"client"},

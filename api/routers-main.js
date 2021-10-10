@@ -81,7 +81,6 @@ router.post('/translate', async (request, response, next) => {
 
       let results = datas[0].hits[0].roms[0].arabs[0];
       let items = [];
-      console.log(results)
 
      //await results.forEach((itemr, i) => {
      await results.translations.forEach(async (item, i) => {

@@ -28,6 +28,9 @@ app.use('/words', routersWord);
 app.use('/blog', routersBlog);
 app.use('/exercise', routersExercise);
 
+app.use('/panel/words', require('./panel/routers-words'));
+app.use('/panel', require('./panel/routers-panel'));
+
 module.exports = {
   path: "/api",
   handler: app

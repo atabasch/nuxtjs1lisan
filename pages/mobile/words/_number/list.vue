@@ -76,7 +76,6 @@ export default {
   },
   methods: {
     changeIsWork(){
-      console.log(this.$route.query.work)
       this.isWork = this.$route.query.work=='true'? true : false;
     },
     updateProgress(){

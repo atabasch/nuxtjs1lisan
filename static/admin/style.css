@@ -16,7 +16,6 @@ a {
 
 *:hover, *:focus, *.active{
     outline: none !important;
-    box-shadow: none !important;
 }
 
 #sidebarMenu h6{

@@ -27,7 +27,6 @@ router.get("/count", (request, response)=>{
       return response.status(200).json({count:result[0].total})
     })
     .catch(error => {
-      console.log(error);
       return response.status(200).json({error:error});
     })
 });
