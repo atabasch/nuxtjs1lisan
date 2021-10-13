@@ -33,7 +33,7 @@
 
     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-3 mb-1 text-muted"><span>Oturum</span></h6>
     <ul class="nav flex-column">
-      <li class="nav-item"><NuxtLink to="/panel/logout" class="nav-link"><i class="fas fa-door-open"></i> Çıkış Yap</NuxtLink></li>
+      <li class="nav-item"><a href="#" @click.prevent="logout" class="nav-link"><i class="fas fa-door-open"></i> Çıkış Yap</a></li>
     </ul>
 
   </div>
@@ -42,6 +42,11 @@
 <script>
 export default {
   name: "Sidebar",
+  methods: {
+    logout: function(){
+      this.$store.dispatch("panel/logout", null);
+    }
+  }
 }
 </script>
 

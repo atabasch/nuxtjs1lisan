@@ -1,9 +1,19 @@
-import {response} from "express";
+import {request, response} from "express";
 
 const router = require("express").Router();
 const slugify = require('slugify')
 import fetch from 'node-fetch';
 import db from "../db";
+
+
+
+router.post("/init", (request, response)=>{
+  response.status(200).json( {
+    user: request.session.user || false,
+  } );
+});
+
+
 
 function getSelectedByDirectory(request){
   return ((request.session.langdir=='tr-de')? 'asw_words.word_translation AS original, asw_words.word_original AS translation' : 'asw_words.word_original AS original, asw_words.word_translation AS translation');

@@ -26,6 +26,7 @@ export default {
     Sidebar,
     HeadSection
   },
+  middleware: ['panel-authentication'],
   head(){ return {
     title: "1 Lisan Yönetim Paneli",
     meta: [

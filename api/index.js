@@ -29,6 +29,7 @@ app.use('/blog', routersBlog);
 app.use('/exercise', routersExercise);
 
 app.use('/panel/words', require('./panel/routers-words'));
+app.use('/panel/taxonomy', require('./panel/routers-taxonomies'));
 app.use('/panel', require('./panel/routers-panel'));
 
 module.exports = {

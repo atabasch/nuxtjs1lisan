@@ -23,7 +23,8 @@ export const mutations = {
 // this.$store.dispatch('methodName', data)
 export const actions = {
   nuxtServerInit(vuexContext, context){
-    return context.$axios.post("/words").then(response => {
+    return context.$axios.post("/init").then(response => {
+      context.store.commit("panel/setAdmin", response.data.user);
     });
   },
   changeDirection(context){

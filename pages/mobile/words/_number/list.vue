@@ -1,15 +1,11 @@
 <template>
-  <section class="mt-5 pt-2">
-    <PageWord  :words="words"/>
-  </section>
-<!--
 <section class="mt-5 pt-2">
 
   <div id="listTable" v-if="!isWork">
     <WordsTable :words="words"/>
     <div class="text-right">
       <NuxtLink :to="this.$route.path+'?work=true'" class="btn btn-dark" type="button"><i class="fas fa-question"></i> Çeviriyi Tahmin Et</NuxtLink>
-      <NuxtLink :to="this.$route.path.replace('words', 'exercsie')+'-test'" class="btn btn-success"><i class="fas fa-check"></i> Test Çöz</NuxtLink>
+      <NuxtLink :to="this.$route.path.replace('words', 'exercise')+'-test'" class="btn btn-success"><i class="fas fa-check"></i> Test Çöz</NuxtLink>
     </div>
   </div>
 
@@ -18,9 +14,8 @@
     <WordWorkCard v-if="showedIndex==index" v-for="(word, index) in words" :word="word" :key="index" :nextCard="nextCard"/>
   </section>
 
-</section> -->
+</section>
 </template>
-
 <script>
 import PageWord from "../../../../components/mobile/PageWord";
 import WordsTable from "~/components/mobile/WordsTable";
