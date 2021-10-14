@@ -41,7 +41,7 @@
   </div>
 
   <div class="card-body text-center py-5">
-      <span class="text-success">{{ this.options.counter.second }}</span>
+
       <h1>{{ getWord.word_original }}</h1>
       <hr>
       <h4 class="text-secondary">{{ getWord.word_translation }}</h4>
@@ -49,7 +49,7 @@
       <p v-if="getWord.sentence">{{ getWord.sentence.original }}</p>
       <button class="btn btn-success" @click="play" v-if="!options.play && options.taxtype==0"><i class="far fa-play-circle"></i> Şu anki ayarlarla başlat</button>
 
-
+    <span class="timer"><strong>{{ this.options.counter.second }}</strong></span>
   </div>
 </section>
 </template>
@@ -237,5 +237,22 @@ export default {
 </script>
 
 <style scoped>
-
+  .card-body{
+    position: relative;
+  }
+  .timer{
+    position: absolute;
+    top:10px;
+    right: 10px;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 3px solid rgba(28,116,48, 1);
+    background:rgba(28,116,48, 0.2);
+    text-align: center;
+    line-height: 2rem;
+    font-size: 1.3rem;
+    border-radius: 50%;
+    -webkit-border-radius: 50% !important;
+    border-radius: 50% !important;
+  }
 </style>
