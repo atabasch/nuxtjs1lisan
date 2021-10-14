@@ -21,6 +21,17 @@ router.post("/", (request, response)=>{
 });
 
 
+
+
+router.post("/random", (request, response)=>{
+  let limit = request.body.limit || 15;
+  let sql = `SELECT * FROM asw_words ORDER BY RAND() LIMIT ${limit}`
+  db.query(sql, (err, res, fields)=>{
+    return response.status(200).json({ words:res });
+  });
+});
+
+
 router.get("/count", (request, response)=>{
   return aswDbQuery(db, "SELECT count(*) as total FROM asw_words", null)
     .then(result => {
@@ -78,8 +89,9 @@ router.post('/categories', (request, response)=>{
 // KATEGORİYE GÖRE KELİMELER.
 router.post('/:category_id/category', (request, response)=>{
   let selected = getSelectedByDirectory(request);
+  let limit = request.body.limit || 15 ;
   let sqlCategory = `SELECT * FROM asw_taxonomies WHERE tax_type='word_category' AND tax_status=1 AND tax_id=${request.params.category_id} LIMIT 1`;
-  let sqlWord = `SELECT *, ${selected} FROM asw_words WHERE word_categories LIKE \'%"${request.params.category_id}"%\' AND word_status>0 ORDER BY rand() LIMIT 15`;
+  let sqlWord = `SELECT *, ${selected} FROM asw_words WHERE word_categories LIKE \'%"${request.params.category_id}"%\' AND word_status>0 ORDER BY rand() LIMIT ${limit}`;
 
   db.query(sqlCategory, (err, res, fields)=>{
     if(err){      return response.status(404).json( {err} );     }else{
@@ -112,8 +124,9 @@ router.post('/types', (request, response)=>{
 // SINIFA GÖRE KELİMELER.
 router.post('/:type_id/type', (request, response)=>{
   let selected = getSelectedByDirectory(request);
+  let limit = request.body.limit || 15 ;
   let sqlType = `SELECT * FROM asw_taxonomies WHERE tax_type='word_type' AND tax_status=1 AND tax_id=${request.params.type_id} LIMIT 1`;
-  let sqlWord = `SELECT *, ${selected} FROM asw_words WHERE word_status=1 AND word_type=${request.params.type_id} ORDER BY rand() DESC LIMIT 15`;
+  let sqlWord = `SELECT *, ${selected} FROM asw_words WHERE word_status=1 AND word_type=${request.params.type_id} ORDER BY rand() DESC LIMIT ${limit}`;
 
   db.query(sqlType, (err, res, fields)=>{
     if(err){      return response.status(404).json( {err} );     }else{
