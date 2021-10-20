@@ -5,7 +5,7 @@
                        :item="item"
                        :key="index"
                        :class-value="'col-6 col-sm-4 col-lg-3 p-2'"
-                       :url="`/mobile/words/${item.tax_id},${limitWordList}/list`" />
+                       :url="`/mobile/words/${item.startNumber},${limitWordList}/list`" />
     </div>
   </section>
 </template>
@@ -32,6 +32,7 @@ export default {
         let data = {
           items: new Array(totalPage).fill({}).map((v,i)=> { return {
             tax_id: i+1,
+            startNumber: Math.floor(limitWordList*(i+1)-(limitWordList-1)),
             word_count: limitWordList,
             tax_name: `Liste ${i+1}`,
             tax_datas: JSON.stringify( {"description": Math.floor(limitWordList*(i+1)-(limitWordList-1)) +'..'+ Math.floor(response.data.count/totalPage*(i+1))}),
