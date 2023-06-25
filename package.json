@@ -18,9 +18,9 @@
     "express": "^4.17.1",
     "express-session": "^1.17.2",
     "mysql": "^2.18.1",
+    "mysql2": "^3.4.1",
     "node-fetch": "^3.0.0",
     "nuxt": "^2.14.12",
     "slugify": "^1.6.0"
-  },
-  "devDependencies": {}
+  }
 }
