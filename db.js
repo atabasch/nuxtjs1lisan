@@ -7,11 +7,18 @@ const mysql = require('mysql2');
 //   port: process.env.DB_PORT || 3306,
 //   // multipleStatements: true
 // });
+<<<<<<< Updated upstream
 
 var connection  = mysql.createPool({
   host: process.env.DB_HOST || 'localhost',
   user: process.env.DB_USER || 'root',
   password: process.env.DB_PASS || '',
+=======
+const connectionSettings = {
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+>>>>>>> Stashed changes
   database: process.env.DB_NAME,
   port: process.env.DB_PORT || 3306,
 
@@ -23,7 +30,9 @@ var connection  = mysql.createPool({
   enableKeepAlive: true,
   keepAliveInitialDelay: 0
   // multipleStatements: true
-});
+}
+console.log('connection settings: ', connectionSettings);
+var connection  = mysql.createPool(connectionSettings);
 
 module.exports = connection;
 
