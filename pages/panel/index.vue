@@ -72,7 +72,7 @@ export default {
     };
     context.store.commit('panel/setContentHeader', contentHeader);
     return context.$axios.post("/panel/dashboard").then(response => {
-      if(response.status==200){
+      if(response.status===200){
         return response.data
       }
     })
@@ -81,12 +81,11 @@ export default {
   computed:{
 
     getCounters:function(){
-
       return [
-        { title: 'Yayımlanmış Makale',  content: this.counters.blog,      icon: 'fas fa-quote-right',   iconClass:'bg-info text-white' },
-        { title: 'Medya Dosyaları',     content: this.counters.media,     icon: 'fas fa-photo-video',   iconClass:'bg-danger text-white' },
-        { title: 'Kayıtlı Kullanıcı',   content: this.counters.users,     icon: 'fas fa-users',         iconClass:'bg-success text-white' },
-        { title: 'Yorumlar',            content: this.counters.comments,  icon: 'fas fa-comments',      iconClass:'bg-warning text-white' },
+        { title: 'Yayımlanmış Makale',  content: this.counter.blog,      icon: 'fas fa-quote-right',   iconClass:'bg-info text-white' },
+        { title: 'Medya Dosyaları',     content: this.counter.media,     icon: 'fas fa-photo-video',   iconClass:'bg-danger text-white' },
+        { title: 'Kayıtlı Kullanıcı',   content: this.counter.users,     icon: 'fas fa-users',         iconClass:'bg-success text-white' },
+        { title: 'Yorumlar',            content: this.counter.comments,  icon: 'fas fa-comments',      iconClass:'bg-warning text-white' },
       ]
     }, // getCOunters
 

@@ -21,6 +21,8 @@
     "mysql2": "^3.4.1",
     "node-fetch": "^3.0.0",
     "nuxt": "^2.14.12",
-    "slugify": "^1.6.0"
+    "sequelize": "^6.32.1",
+    "slugify": "^1.6.0",
+    "sweetalert2": "^11.7.27"
   }
 }

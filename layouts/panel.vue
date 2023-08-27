@@ -19,6 +19,7 @@
 import Navbar from "~/components/panel/Navbar";
 import Sidebar from "~/components/panel/Sidebar";
 import HeadSection from "~/components/panel/HeadSection";
+
 export default {
   name: "panel",
   components: {

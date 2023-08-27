@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 export const state = ()=>({
   contentHeader: null,
   defaultContentHeader: {
@@ -34,9 +35,23 @@ export const actions = {
     this.$axios.post("/panel/login", {user:data.user})
       .catch(error=>{  })
       .then(result=>{
-        if(result.status==200 && result.data){
+        if(result.status==200 && result.data.user_id){
           context.commit("setAdmin", result.data);
           this.$router.push("/panel")
+        }else{
+          Swal.fire({
+            toast: true,
+            title: '"Kullanıcı girişi başarısız oldu."',
+            icon: 'error',
+            timer: 3000,
+            position: 'top-end',
+            showConfirmButton: false,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            },
+            timerProgressBar: true,
+          })
         }
       });
   }, //login
