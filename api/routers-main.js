@@ -1,9 +1,7 @@
-import {request, response} from "express";
-
 const router = require("express").Router();
 const slugify = require('slugify')
 import fetch from 'node-fetch';
-import db from "../db";
+import aswDB from "../db";
 
 
 
@@ -35,12 +33,13 @@ router.post("/work", async (request, response)=>{
 
   let selected = getSelectedByDirectory(request);
   let sqlWord = `SELECT *, ${selected} FROM asw_words WHERE word_status=1 ${whereNotIn} ORDER BY rand() DESC LIMIT 20`;
-  db.query(sqlWord, (err, result, fields) => {
-    if(err){      response.status(404).json( {err} );     }else{
-      response.status(200).json( {words:result} );
-    } //if(err)
-  });
-
+  return aswDB.getAll(sqlWord)
+    .catch(error => {
+      return response.status(202).json( {status:false, error} );
+    })
+    .then(result => {
+      return response.status(200).json( {status:true, words:result.rows} );
+    })
 });
 
 
@@ -51,7 +50,7 @@ router.post('/change-direction', async (request, response) => {
   if(typeof request.session.langdir == "undefined"){
     request.session.langdir = 'tr-de';
   }else{
-    request.session.langdir = request.session.langdir=='tr-de'? 'de-tr' : 'tr-de' ;
+    request.session.langdir = request.session.langdir==='tr-de'? 'de-tr' : 'tr-de' ;
   }
   response.status(200).json({langdir:request.session.langdir});
 });
@@ -64,7 +63,7 @@ function translatePons(language='de', item, callback){
     headers: { 'X-Secret': 'ec501ec58ad6cd4ece81e4672479fcf7cfa0cac6eed8eff5aa49ed64200cb43c' }
   })
     .then(result => {
-      return result.status==200? result.json() : {error:true, status:result.status} ;
+      return result.status===200? result.json() : {error:true, status:result.status} ;
     })
     .then(json => {
       callback(json);
@@ -72,9 +71,14 @@ function translatePons(language='de', item, callback){
     .catch(err => { callback({error:true}) } );
 } //translatePons
 
+
+/*
+    İsim türündeki Almanca kelimeden artikel siler.
+ */
 function clearOriginal(original){
   return original.replace(/^(das |der |die |Das |Der |Die )/g, '');
 } //clearOriginal
+
 
 router.post('/translate', async (request, response, next) => {
   let original = request.body.original;

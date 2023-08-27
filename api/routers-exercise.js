@@ -1,9 +1,9 @@
 const router = require("express").Router();
-const db = require("../db");
+import aswDB from '../db'
 import {arrayShuffle} from "../plugins/helpers";
 
 function getSelectedByDirectory(request, preTable='asw_words'){
-  return ((request.session.langdir=='tr-de')? `${preTable}.word_translation AS original, ${preTable}.word_original AS translation` : `${preTable}.word_original AS original, ${preTable}.word_translation AS translation`);
+  return ((request.session.langdir ==='tr-de')? `${preTable}.word_translation AS original, ${preTable}.word_original AS translation` : `${preTable}.word_original AS original, ${preTable}.word_translation AS translation`);
 } // getSelectedByDirectory
 
 
@@ -13,7 +13,7 @@ function getSelectedByDirectory(request, preTable='asw_words'){
 
 function getSqlForTest(request, limit=15, extraSql='', extraInSql=''){
   let selected = getSelectedByDirectory(request, 'mt');
-  let answersSelected = (request.session.langdir=='tr-de')? 'word_original' : 'word_translation';
+  let answersSelected = (request.session.langdir==='tr-de')? 'word_original' : 'word_translation';
 
   let sql = `SELECT mt.*, ${selected},
        (SELECT
@@ -23,7 +23,9 @@ FROM asw_words as mt
 WHERE mt.word_status=1
 ${extraSql}
 LIMIT ${limit}`;
+
   return sql;
+
 } //getSqlForTest
 
 
@@ -34,76 +36,94 @@ LIMIT ${limit}`;
 
 function getTestResultForPackage(request, response){
   let limit = request.query.limit || 15;
-  let id = request.query.id || null;
+  let id    = request.query.id || null;
 
   let sqlTaxonomy = `SELECT package_items, package_id as tax_id, package_name as tax_name, package_cover as tax_cover, package_datas as tax_datas, JSON_LENGTH(package_items) AS word_count FROM asw_packets WHERE package_status=1 AND package_id=${id} LIMIT 1`;
-  db.query(sqlTaxonomy, (err, resultTaxonomy, fields)=>{
-    let itemIds = JSON.parse(resultTaxonomy[0].package_items);
-    let sql = getSqlForTest(request, limit, `AND mt.word_id IN (${itemIds}) ORDER BY rand()`, `AND word_id IN (${itemIds.join(',')}) `);
-    db.query(sql, (err, result, fields)=>{
-      if(err){ response.status(200).json(err); }else{
-        response.status(200).json({taxonomy:resultTaxonomy[0], words: result});
-      }
-    });
-  }); // query
+  let objTaxonomy = {};
+
+  return aswDB.getOne(sqlTaxonomy)
+    .then(resultTaxonomy => {
+      objTaxonomy = resultTaxonomy;
+      let itemIds = JSON.parse(resultTaxonomy.row.package_items);
+      let sql     = getSqlForTest(request, limit, `AND mt.word_id IN (${itemIds}) ORDER BY rand()`, `AND word_id IN (${itemIds.join(',')}) `);
+      return aswDB.getAll(sql);
+    })
+    .then(result => {
+      return response.status(200).json({taxonomy:objTaxonomy.row, words: result.rows});
+    })
+    .catch(error => {
+      return response.status(202).json({ status:false, error })
+    })
+
 } //getTestResultForPackage,
 
 
 function getTestResultForType(request, response){
   let limit = request.query.limit || 15;
-  let id = request.query.id || null;
+  let id    = request.query.id || null;
+
   let sqlTaxonomy = `SELECT * FROM asw_taxonomies WHERE tax_type='word_type' AND tax_status=1 AND tax_id=${id} LIMIT 1`;
-  db.query(sqlTaxonomy, (err, resultTaxonomy, fields)=>{
-    let sql = getSqlForTest(request, limit, `AND mt.word_type=${id} ORDER BY rand()`, `AND word_type=${id}`);
-    db.query(sql, (err, result, fields)=>{
-      if(err){ response.status(200).json(err); }else{
-        response.status(200).json({taxonomy:resultTaxonomy, words: result});
-      }
+  let objTaxonomy = {};
+
+  return aswDB.getOne(sqlTaxonomy)
+    .then(resultTaxonomy => {
+      objTaxonomy = resultTaxonomy;
+      let sql = getSqlForTest(request, limit, `AND mt.word_type=${id} ORDER BY rand()`, `AND word_type=${id}`);
+      return aswDB.getAll(sql);
+    })
+    .then(result => {
+      return response.status(200).json({taxonomy:objTaxonomy.row, words: result.rows});
+    })
+    .catch(error => {
+      return response.status(202).json({ status:false, error })
     });
-  }); // query
 } //getTestResultForPackage
 
 
 
 function getTestResultForCategory(request, response){
   let limit = request.query.limit || 15;
-  let id = request.query.id || null;
+  let id    = request.query.id || null;
 
   let sqlTaxonomy = `SELECT * FROM asw_taxonomies WHERE tax_type='word_category' AND tax_status=1 AND tax_id=${id} LIMIT 1`;
-  db.query(sqlTaxonomy, (err, res, fields)=>{
-    if(err){      return response.status(404).json( {err} );     }else{
-      let category = res;
+  let objTaxonomy = {};
+
+  return aswDB.getOne(sqlTaxonomy)
+    .then(resultTaxonomy => {
+      objTaxonomy = resultTaxonomy;
       let sql = getSqlForTest(request, limit, `AND mt.word_categories LIKE \'%"${id}"%\' ORDER BY rand()`, `AND word_categories LIKE \'%"${id}"%\'`);
-      db.query(sql, (err, result, fields) => {
-        if(err){      return response.status(404).json( {err} );     }else{
-
-          return response.status(200).json( {category:category[0], words:result} );
-        } //if(err)
-      });
-
-    } //if(err)
-  });
+      return aswDB.getAll(sql);
+    })
+    .then(result => {
+      return response.status(200).json({category:objTaxonomy.row, words: result.rows});
+    })
+    .catch(error => {
+      return response.status(202).json({ status:false, error })
+    });
 } //getTestResultForCategory
 
 
 function getTestResultForList(request, response){
   let limit = request.query.limit || 15;
-  let id = request.query.id || null;
+  let id    = request.query.id || null;
 
   let sql = getSqlForTest(request, `${id}, ${limit}`, ` ORDER BY rand()`, ``);
-  db.query(sql, (err, result, fields) => {
-    if(err){      return response.status(404).json( {err} );     }else{
 
+  return aswDB.getAll(sql)
+    .then(result => {
       return response.status(200).json( {
-        words:result,
+        words:result.rows,
         taxonomy: {
           tax_id:1,
           tax_name: "Kelime Listesi",
           tax_description: ""
         }
       } );
-    } //if(err)
-  });
+
+    })
+    .catch(error => {
+      return response.status(202).json({ status:false, error })
+    });
 
 } //getTestResultForList
 
@@ -112,14 +132,14 @@ function getTestResultForList(request, response){
 
 router.post('/test', (request, response)=>{
   let taxonomy = request.query.taxonomy || null;
-  if(taxonomy=='package'){ // EĞER TAXONOMY PACKAGE OLARAK GELDİYSE
-    getTestResultForPackage(request, response);
-  }else if(taxonomy=='type'){
-    getTestResultForType(request, response);
-  }else if(taxonomy=='category'){
-    getTestResultForCategory(request, response);
-  }else if(taxonomy=='list'){
-    getTestResultForList(request, response);
+  if(taxonomy==='package'){ // EĞER TAXONOMY PACKAGE OLARAK GELDİYSE
+    return getTestResultForPackage(request, response);
+  }else if(taxonomy==='type'){
+    return getTestResultForType(request, response);
+  }else if(taxonomy==='category'){
+    return getTestResultForCategory(request, response);
+  }else if(taxonomy==='list'){
+    return getTestResultForList(request, response);
   }else{ // EĞER TAXONOMY BOŞ GELDİYSE
 
   }

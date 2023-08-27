@@ -1,22 +1,26 @@
 const router = require("express").Router();
-const db = require("../db");
+import aswDB from "../db";
 
 router.post("/", (request, response) => {
   let sql = `SELECT * FROM asw_posts WHERE post_type='post' AND post_status='publish' ORDER BY post_id DESC`;
-  db.query(sql, (err, result, fields) => {
-    if(err){ response.status(404).json( {err:err} ); }else{
-      response.status(200).json( {posts: result} );
-    }
-  });
+  return aswDB.getAll(sql)
+    .then(result => {
+      return response.status(200).json( {status:true, posts: result.rows} );
+    })
+    .catch(error => {
+      return response.status(202).json( {status:false, error: error} );
+    });
 });
 
 router.post("/:slug/:id", (request, response) => {
   let sql = `SELECT * FROM asw_posts WHERE post_type='post' AND post_status='publish' AND post_id=${request.params.id} LIMIT 1`;
-  db.query(sql, (err, result, fields) => {
-    if(err){ response.status(404).json( {err:err} ); }else{
-      response.status(200).json( {post: result[0]} );
-    }
-  });
+  return aswDB.getOne(sql)
+    .then(result => {
+      return response.status(200).json( {status:true, post: result.row} );
+    })
+    .catch(error => {
+      return response.status(202).json( {status:false, error: error} );
+    });
 });
 
 module.exports = router;
