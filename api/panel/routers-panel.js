@@ -1,21 +1,25 @@
 const router = require("express").Router();
-import aswDB from "../../plugins/aswDB";
+import aswDB from "../../db";
 import aswCrypto from '../../plugins/aswCrypto';
 
 
 
 
 router.post("/login", (request, response)=>{
-  let user = request.body.user;
+  let user  = request.body.user;
   user.pass = aswCrypto.mix(user.pass);
-  let sql = "SELECT * FROM asw_users WHERE user_username=? AND user_password=? AND user_status=? AND user_level>? LIMIT 1";
-  aswDB(sql, [user.name, user.pass, true, 1])
-    .catch(error=>{ response.status(202).json( error ); })
-    .then( result =>{
+  let sql   = "SELECT * FROM asw_users WHERE user_username=? AND user_password=? AND user_status=? AND user_level>? LIMIT 1";
 
-      let user = result[0] || false;
+  aswDB.getOne(sql, { values: [user.name, user.pass, true, 1] })
+    .catch(error=>{ 
+      response.status(202).json( {status:false, error} ); 
+    })
+    .then( result =>{
+      console.log(result);
+
+      let user = result.row || false;
       if(!user){
-        response.status(202).json( {status:false, message:'Hesap bilgileri hatalı'} );
+        return response.status(202).json( {status:false, message:'Hesap bilgileri hatalı'} );
       }else{
         delete(user["user_password"]);
         delete(user["user_create"]);
@@ -28,11 +32,13 @@ router.post("/login", (request, response)=>{
 
         request.session.user = user;
         request.session.save();
-        response.status(200).json( user );
+        return response.status(200).json( user );
       }
+
     });
 
-});
+}); // /panel/login
+
 
 
 router.post("/logout", (request, response)=>{
@@ -52,34 +58,30 @@ router.post("/logout", (request, response)=>{
 
 
 router.post("/dashboard", (request, response)=>{
+  const data  = {}
   let sql = `SELECT
        (SELECT COUNT(*) FROM asw_posts WHERE post_status>0 AND post_type='post') as blog,
        (SELECT COUNT(*) FROM asw_media) as media,
        (SELECT COUNT(*) FROM asw_users) as users,
        (SELECT COUNT(*) FROM asw_comments) as comments`;
-  aswDB(sql)
+  aswDB.getOne(sql)
+    .then(countResult => {
+      data.counter = countResult.row || {}
+      sql = "SELECT * FROM asw_posts WHERE post_status>0 AND post_type='post' ORDER BY post_id DESC LIMIT 10";
+      return aswDB.getAll(sql)
+    })
+    .then(result => {
+        data.status = true;
+        data.posts  = result.rows;
+        response.status(200).json( data );
+    })
     .catch(error => {
       response.status(202).json( {status:false, error:error} );
     })
-    .then(countResult => {
-
-      const data = { counter: countResult[0][0] || {} }
-
-      sql = "SELECT * FROM asw_posts WHERE post_status>0 AND post_type='post' ORDER BY post_id DESC LIMIT 10";
-
-      aswDB(sql).catch(err => response.status(202).json( {status:false, error:err} ) )
-        .then(result => {
-
-          data.status = true;
-          data.posts  = result[0] || [];
-
-          response.status(200).json( data );
-
-        })
-
-    })
 });
 
-router.post("/")
+router.get("/", (request, response) => {
+  return response.status(301).redirect("/dashboard");
+});
 
 module.exports = router;

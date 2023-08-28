@@ -146,7 +146,9 @@ export default {
 
   fetch() {
     return this.$axios.post("/panel/taxonomy/get", {tax_type: ["word_type", "word_category"]})
-      .then(result => { this.taxonomies =  result.data; })
+      .then(result => {
+        this.taxonomies =  result.data.result;
+       })
       .catch(error=>{ console.log(error) });
   }, //asyncData
 

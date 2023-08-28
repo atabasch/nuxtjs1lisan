@@ -1,33 +1,38 @@
 const router = require("express").Router();
-import aswDB from "../../plugins/aswDB";
+import aswDB from "../../db";
 
-router.post('/get', (request, response)=>{
+
+router.post('/get', async (request, response)=>{
   let sqlItems = [];
   if(!(request.body.tax_type || false)){
-    sqlItems = [ "SELECT * FROM asw_taxonomies ORDER BY tax_id DESC" ];
-    aswDB(sqlItems.join(" "))
-      .catch(error=>{
-        response.status(202).json( {error} );
-      })
-      .then(result => {
-        response.status(200).json( {result} );
-      })
-  }else{
-    request.body.tax_type.forEach(type => {
-      sqlItems.push(`SELECT * FROM asw_taxonomies WHERE tax_type='${type}' ORDER BY tax_id DESC;`);
-    });
 
-    aswDB(sqlItems.join(" "))
+    let sql = "SELECT * FROM asw_taxonomies ORDER BY tax_id DESC";
+    aswDB.getAll(sql)
       .catch(error=>{
-        response.status(202).json( {error} );
+        response.status(202).json( {status:false, error} );
       })
       .then(result => {
-        let resultObject= {};
-        request.body.tax_type.forEach((type, index) => {
-          resultObject[type] = result[index];
-        });
-        response.status(200).json( resultObject );
+        response.status(200).json( {status:true, result:result.rows} );
       })
+
+
+  }else{
+
+      try {
+          let resultObject = {};
+          const promises = request.body.tax_type.map(async (type) => {
+              let sql = `SELECT * FROM asw_taxonomies WHERE tax_type='${type}' ORDER BY tax_id DESC`;
+              const result = await aswDB.getAll(sql);
+              resultObject[type] = result.rows;
+          });
+      
+          await Promise.all(promises);
+          return response.status(200).json({ status: true, result:resultObject });
+      
+      } catch (error) {
+          return response.status(202).json({ status: false, error });
+      }
+    
   } //else
 
 }); // get

@@ -29,16 +29,18 @@ class AtabaschDatabase{
   }
 
 
-  getQuery(sql, params= {}){
+  getQuery(sql, params= {}, type=null){
 
       let connection = this.connection;
+      let queryType = !type? QueryTypes.SELECT : type;
 
       return new Promise(async function(success, fail){
 
         return connection.query(sql, {
-          plain: params.returnSingle || false,
-          raw: true,
-          type: QueryTypes.SELECT,
+          plain:  params.returnSingle || false,
+          raw:    true,
+          type:   queryType,
+          // todo: verilerin obj yada array olarak gelmesine göre ayarlaniyor mu
           replacements: params.values || []
         })
 
@@ -52,7 +54,7 @@ class AtabaschDatabase{
 
         .then(function(results){
             return success( {
-              length: results.length, // satır sayısı
+              length: results.length || -1, // satır sayısı
               rows: !params.returnSingle? results : [],
               row: !params.returnSingle? [] : results ,
             } );
@@ -64,13 +66,38 @@ class AtabaschDatabase{
 
 
 
-  getAll(sql, params={values:[], errorTag: 'asw-db-query', returnSingle:false}){
+  getAll(sql, params={}){
+    params.values = params.values || []
+    params.returnSingle = false
+    params.errorTag = params.errorTag || 'asw-db-query' 
     return this.getQuery(sql, params)
   } // getAll();
 
-  getOne(sql, params={values:[], errorTag: 'asw-db-query', returnSingle:true}){
+  getOne(sql, params={}){
+    params.values = params.values || []
+    params.returnSingle = true
+    params.errorTag = params.errorTag || 'asw-db-query' 
+
     return this.getQuery(sql, params)
   } // getOne();
+
+  insert(sql, params={}){
+    params.values = params.values || []
+    params.errorTag = params.errorTag || 'asw-db-query' 
+    return this.getQuery(sql, params, QueryTypes.INSERT);
+  } // insert();
+
+  update(sql, params={}){
+    params.values = params.values || []
+    params.errorTag = params.errorTag || 'asw-db-query' 
+    return this.getQuery(sql, params, QueryTypes.UPDATE);
+  } // update();
+
+  delete(sql, params={}){
+    params.values = params.values || []
+    params.errorTag = params.errorTag || 'asw-db-query' 
+    return this.getQuery(sql, params, QueryTypes.DELETE);
+  } // delete();
 
 
 
