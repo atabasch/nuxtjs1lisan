@@ -37,9 +37,12 @@ router.post("/get", (request, response)=>{
 
 
 router.post("/create", (request, response)=>{
-  // todo: asagidaki sorguyu sequelizeye göre düzenle
-  let sql = `INSERT INTO asw_words SET ?`;
-  let insertDatas = request.body.datas;
+  let insertDatas   = request.body.datas;
+  let insertColumns = Object.keys(insertDatas).join(",");
+  let insertValues  = Object.keys(insertDatas).map(e => ":"+e).join(",");
+
+  let sql = `INSERT INTO asw_words(${insertColumns}) VALUES(${insertValues})`;
+
   insertDatas.word_categories = JSON.stringify(request.body.datas.word_categories);
   insertDatas.word_datas = JSON.stringify(request.body.datas.word_datas);
   aswDB.insert(sql, {values: insertDatas})

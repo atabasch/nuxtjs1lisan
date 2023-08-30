@@ -5,6 +5,7 @@
     <WordForm :title="'Kelime Ekle'" v-if="!word"  @wordCreated="updateWordInList($event, false)" @changedOriginal="searchedValue=$event"/>
     <WordForm :title="'Kelime Düzenle'" v-else :word="word"  @wordUpdated="updateWordInList($event, true)" @changedOriginal="searchedValue=$event"/>
   </div>
+
   <div class="col">
     <div class="form-inline clearfix">
       <h4>Kelime Listesi {{ searchedValue }}</h4>
@@ -21,6 +22,7 @@
           <th width="25"></th>
         </tr>
         </thead>
+
         <tbody>
         <tr v-for="(item, index) in items"
             :id="'item-tr-'+item.word_id"
@@ -30,10 +32,10 @@
           <td>{{ item.word_translation }}</td>
           <td>{{ item.tax_name }}</td>
           <td>
-            <button @click="editWord(item, index)" class="btn btn-warning" style="height:20px; padding: 0px 7px; line-height:18px;"><i class="fas fa-edit fa-xs"></i></button>
+            <button @click="editWord(item, index)" class="btn btn-warning" style="height:20px; padding: 0px 7px; line-height:18px;"><em class="fas fa-edit fa-xs"></em></button>
           </td>
           <td>
-            <button class="btn btn-danger" @click="deleteWord(item,index)" style="height:20px; padding: 0px 7px; line-height:18px;"><i class="fas fa-trash fa-xs"></i></button>
+            <button class="btn btn-danger" @click="deleteWord(item,index)" style="height:20px; padding: 0px 7px; line-height:18px;"><em class="fas fa-trash fa-xs"></em></button>
           </td>
         </tr>
 

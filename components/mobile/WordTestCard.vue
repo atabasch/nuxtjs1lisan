@@ -17,7 +17,7 @@
 
       <div class="col-12">
         <h6>{{ !word.perfekt? ' ' : 'Geçmiş Zaman' }}</h6>
-        <p></p>
+        <!-- <p></p> -->
         <p v-show="!showPerfekt" @click="showPerfekt=true"><i class="fas fa-eye-slash"></i></p>
         <p v-show="showPerfekt">{{ word.perfekt }}</p>
         <hr>

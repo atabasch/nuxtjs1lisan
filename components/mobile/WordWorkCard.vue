@@ -18,7 +18,7 @@
         <div class="col-12">
           <h6>{{ !word.perfekt? ' ' : 'Geçmiş Zaman' }}</h6>
           <p></p>
-          <p v-show="!showPerfekt" @click="showPerfekt=true"><i class="fas fa-eye-slash"></i></p>
+          <p v-show="!showPerfekt" @click="showPerfekt=true"><em class="fas fa-eye-slash"></em></p>
           <p v-show="showPerfekt">{{ word.perfekt }}</p>
           <hr>
         </div>
@@ -26,7 +26,6 @@
         <div class="col-12">
           <h6>{{ !word.conjugations? ' ' : 'Çekimler' }}</h6>
           <div class="row text-left" style="height:45px;" :class="{invisible: !showConjugations}" v-html="word.conjugations">
-            {{ word.conjugations }}
           </div>
           <!-- <p :data-target="'showConjugations-'+word.word_id" class="text-left m-0 pl-5 invisible" style="line-height:17px; height:102px; font-size:15px;" v-html="word.conjugations"></p> -->
         </div>
@@ -39,32 +38,32 @@
               <button type="button"
                       :disabled="!word.conjugations"
                       @click="showConjugations=!showConjugations"
-                      class="btn btn-dark btn-block rounded text-center"><i class="fas fa-list-ul"></i><div><small>Çekimler</small></div></button>
+                      class="btn btn-dark btn-block rounded text-center"><em class="fas fa-list-ul"></em><div><small>Çekimler</small></div></button>
             </div>
 
             <div class="col-3 p-1">
               <button type="button"
                       :disabled="!word.perfekt"
                       @click="showPerfekt=!showPerfekt"
-                      class="btn btn-warning btn-block rounded text-center"><i class="fas fa-history"></i><div><small>G.Zaman</small></div></button>
+                      class="btn btn-warning btn-block rounded text-center"><em class="fas fa-history"></em><div><small>G.Zaman</small></div></button>
             </div>
 
             <div class="col-6 p-1" v-if="!showWord">
               <button type="button"
                       @click="showWord=true"
-                      class="btn btn-info btn-block rounded text-center"><i class="fas fa-eye"></i><div><small>Göster</small></div></button>
+                      class="btn btn-info btn-block rounded text-center"><em class="fas fa-eye"></em><div><small>Göster</small></div></button>
             </div>
 
             <div class="col-3 p-1" v-if="showWord">
               <button type="button"
                       @click="nextCard"
-                      class="btn btn-danger btn-block rounded text-center"><i class="fas fa-times"></i><div><small>Yanlış</small></div></button>
+                      class="btn btn-danger btn-block rounded text-center"><em class="fas fa-times"></em><div><small>Yanlış</small></div></button>
             </div>
 
             <div class="col-3 p-1" v-if="showWord">
               <button type="button"
                       @click="nextCard"
-                      class="btn btn-success btn-block rounded text-center"><i class="fas fa-check"></i><div><small>Doğru</small></div></button>
+                      class="btn btn-success btn-block rounded text-center"><em class="fas fa-check"></em><div><small>Doğru</small></div></button>
             </div>
           </div><!-- row p-0 -->
         </div><!-- col-12 align-self-end -->
@@ -95,7 +94,7 @@ export default {
   },
 
   created() {
-    console.log(this.sonraki)
+    // console.log(this.sonraki)
   },
 
   methods: {

@@ -20,7 +20,7 @@ export default {
     ],
     script: [
       {src:"/js/jquery-3.5.1.min.js", mode:"client"},
-      {src:"/js/popper.min.js", mode:"client"},
+      // {src:"/js/popper.min.js", mode:"client"},
       {src:"/js/bootstrap.js", mode:"client"},
       {src:"/fontawesome/js/all.min.js", mode:"client"}
     ]

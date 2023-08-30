@@ -5,7 +5,7 @@
 
         <ul class="nav nav-pills nav-justified bg-light border-top">
 
-          <li class="nav-item"><NuxtLink to="/mobile" class="nav-link text-dark py-3"><i class="fa-lg fa fa-home"></i></NuxtLink></a></li>
+          <li class="nav-item"><NuxtLink to="/mobile" class="nav-link text-dark py-3"><i class="fa-lg fa fa-home"></i></NuxtLink></li>
           <li class="nav-item"><NuxtLink to="/mobile/words/packets" class="nav-link text-dark py-3"><i class="fa-lg fa fa-parachute-box"></i></NuxtLink></li>
           <li class="nav-item"><NuxtLink to="/mobile/exercise" class="nav-link text-dark py-3"><i class="fa-lg fa fa-brain"></i></NuxtLink></li>
           <li class="nav-item"><NuxtLink to="/mobile/translate" class="nav-link text-dark py-3"><i class="fa-lg fa fa-language"></i></NuxtLink></li>

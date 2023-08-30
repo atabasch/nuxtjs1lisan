@@ -13,10 +13,10 @@
      </div>
    </div>
 
-   <section id="workTable" class="position-relative w-100" style="height: 600px" v-else>
+   <div id="workTable" class="position-relative w-100" style="height: 600px" v-else>
      <CardStatusProgressBar :percent="percent"/>
      <WordWorkCard v-if="showedIndex==index" v-for="(word, index) in this.$store.getters['words/getWords']" :word="word" :key="index" :nextCard="nextCard"/>
-   </section>
+   </div>
 
  </section>
 

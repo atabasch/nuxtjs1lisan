@@ -2,7 +2,7 @@
   <table class="table table-bordered table-hovered table-striped table-sm bg-white">
     <thead>
     <tr>
-      <th width="20">#</th>
+      <th style="width: 20px;">#</th>
       <th>Orjinal</th>
       <th>Çeviri</th>
     </tr>

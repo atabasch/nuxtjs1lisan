@@ -108,7 +108,7 @@
             <legend role="button" data-toggle="collapse" data-target="#conjugations" aria-expanded="false" aria-controls="conjugations">Fiil Çekimleri: (Tıkla Aç/Kapat)</legend>
             <div id="conjugations" class="collapse" :class="{show: word.word_datas.conjugations.length>0}">
               <textarea name="conjugations" rows="8" placeholder="Fiil çekimlerini her satıra sadece 1 adet olacak şekilde yazın." v-model="word.word_datas.conjugations"></textarea>
-              <small><um>Fiil çekimlerini her satıra sadece 1 adet olacak şekilde yazın.</um></small>
+              <small><em>Fiil çekimlerini her satıra sadece 1 adet olacak şekilde yazın.</em></small>
             </div>
           </fieldset>
         </div>
